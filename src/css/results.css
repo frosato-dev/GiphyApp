@@ -2,17 +2,27 @@
   padding: 1rem;
 }
 
+.results__loading--hidden,
 .results__empty--hidden,
 .results__grid--hidden {
-  display: none;
+  /*display: none;*/
 }
 
 .results__grid {}
 
+.results__loading,
 .results__empty {
   color: #C50A3D; /* Red */
   padding: 2rem;
   text-align: center;
   font-size: 1.5rem;
   font-weight: bold;
+}
+
+.results__loader {
+  margin:  1rem auto;
+  height: 100px;
+  width: 100px;
+  background: url('./assets/img/loader.svg') no-repeat 50% 50%;
+  background-size: contain;
 }
