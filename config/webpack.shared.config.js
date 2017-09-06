@@ -47,24 +47,13 @@ module.exports = (env, argv) => {
                       require('postcss-import')({ root: loader.resourcePath }),
                       require('postcss-cssnext')(),
                       require('cssnano')(),
-                      //require('autoprefixer')(), // not needed ? since it's included in 'postcss-cssnext'
                     ],
                   },
                 },
-                //{ loader: 'sass-loader' }, // To remove use postCSS instead
               ],
               fallback: 'style-loader' // Use style-loader in development
           })
         },
-        /*
-        {
-			    test: /\.svg/,
-			    use: {
-			      loader: 'svg-url-loader',
-			      options: {}
-			    }
-			  },
-        */
         {
           test: /\.(jpe?g|png|gif|svg)$/i,
           use: [
