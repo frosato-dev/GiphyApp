@@ -1,0 +1,17 @@
+@import 'reset-css/reset.css';
+@import './css/buttons.css';
+@import './css/header.css';
+@import './css/results.css';
+@import './css/grid.css';
+
+/* @TODO
+  CSSLINT .csslintrc not working
+  Store colors in vars
+*/
+/* csslint ignore:start */
+/* csslint ignore:end */
+
+body {
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 12px;
+}

@@ -36,7 +36,7 @@ module.exports = (env, argv) => {
           use: [ 'babel-loader' ],
         },
         {
-          test: /\.scss$/,
+          test: /\.css$/,
           use: extractSass().extract({
               use: [
                 { loader: 'css-loader' },
@@ -51,7 +51,7 @@ module.exports = (env, argv) => {
                     ],
                   },
                 },
-                { loader: 'sass-loader' }, // To remove use postCSS instead
+                //{ loader: 'sass-loader' }, // To remove use postCSS instead
               ],
               fallback: 'style-loader' // Use style-loader in development
           })

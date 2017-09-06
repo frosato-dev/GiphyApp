@@ -1,0 +1,77 @@
+.header {
+  background-color: #571845; /* Purple */
+  text-align: center;
+  position: relative;
+  padding: 1rem 0;
+}
+
+.header__title {
+  color: #fff;
+  font-size: 3rem;
+  font-weight: bold;
+  margin: auto;
+  padding:  0.3rem 0;
+}
+
+.header__logo {
+  width: 200px;
+}
+
+.header__nav {
+  position: absolute;
+  right: 1rem;
+  top: 1rem;
+}
+
+.header__nav-item {
+  color: #fff;
+  font-weight: bold;
+  text-transform: uppercase;
+}
+
+.header__form {
+  max-width: 500px;
+  min-width: 200px;
+  margin: 1rem auto;
+  position: relative;
+}
+
+.header__form-input {
+  border: none;
+  border-radius: .3rem;
+  font-size: 1rem;
+  width: 100%;
+  height: 3rem;
+  padding-left: 3rem;
+  box-sizing: border-box;
+}
+
+.input {
+  border-radius: .3rem;
+  width: 100%;
+}
+
+.header__form-button {
+  background-color: #353535; /* DarkPurple */
+  border: none;
+  height: 1.5rem;
+  width: 1.5rem;
+  position: absolute;
+  padding: 0;
+}
+
+.header__form-button--disabled {
+  background-color: #d1d1d1; /*lightGrey*/
+}
+
+.header__form-submit {
+  mask: url('./assets/img/glass.svg') no-repeat 50% 50%;
+  left: .75rem;
+  top: .75rem;
+}
+
+.header__form-clear {
+  mask: url('./assets/img/cross.svg') no-repeat 50% 50%;
+  right: .75rem;
+  top: .75rem;
+}

@@ -1,0 +1,31 @@
+.grid {
+  padding: 1rem;
+  column-count: 3;
+  column-gap: 1rem;
+}
+
+.grid__panel {
+  background-color: #e7e8e8; /*lightGrey*/
+  break-inside: avoid; /* ensures that content blocks don’t break and span across columns */
+  border-radius: .3rem;
+  overflow: hidden;
+}
+
+.grid__panel-content {
+
+}
+
+.grid__panel-image {
+  max-width: 100%;
+}
+
+.grid__panel-action {
+  display: flex;
+  justify-content: space-around;
+  padding: .5rem;
+}
+
+.grid__panel-action-btn {
+  width: 1.5rem;
+  height: 1.5rem;
+}

@@ -1,0 +1,18 @@
+.results {
+  padding: 1rem;
+}
+
+.results__empty--hidden,
+.results__grid--hidden {
+  display: none;
+}
+
+.results__grid {}
+
+.results__empty {
+  color: #C50A3D; /* Red */
+  padding: 2rem;
+  text-align: center;
+  font-size: 1.5rem;
+  font-weight: bold;
+}

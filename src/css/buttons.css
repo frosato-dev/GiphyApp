@@ -1,0 +1,16 @@
+.icon-btn {
+  background-color: #d1d1d1; /*lightGrey*/
+  border: none;
+}
+
+.icon-btn__favorite {
+  mask: url('./assets/img/heart.svg') no-repeat 50% 50%;
+}
+
+.icon-btn__favorite--active {
+  background-color: #FEC12E; /* Yellow */
+}
+
+.icon-btn__copy {
+  mask: url('./assets/img/copy.svg') no-repeat 50% 50%;
+}
