@@ -31,14 +31,13 @@ export default class Dom {
    * @return {DomElement(s)}
    */
   static get(selector) {
-    console.log('selector', selector.substr(1));
     if(selector.startsWith('#')) {
       return getById(selector.substr(1))
     }
     if (selector.startsWith('.')) {
       return getByClass(selector.substr(1))
     }
-    return getElementsByTagName(selector)
+    return getByTag(selector)
   }
 
   /**
