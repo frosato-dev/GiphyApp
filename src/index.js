@@ -1,32 +1,21 @@
+require("babel-core/register");
+require("babel-polyfill");
+
 import style from './index.css';
-
-import getUrlParam from './utils/router/getUrlParams';
+import { getCurrentWindowUrlParam } from './utils/router/getUrlParams';
 import Dom from './utils/dom';
-import GiphyService from './services/giphy';
-
-import { SEARCH_RESULTS_ID } from './constants/dom-selector';
-import getGridItems from './templates/get-grid-items';
-
-const urlParams = getUrlParam(window.location, 'q');
-const search = urlParams['q'];
+import HomeCtrl from './controllers/home';
 
 Dom.ready()
   .then(() => {
 
-    // Listen for input change (change /input) event
-    Dom.get(".header__form-input")[0].addEventListener('input', (e) => {
-       alert('Horray! Someone wrote "' + e.target.value + '"!');
-    });
+    // Cheack current route
 
-    // Check if query is already set
 
-    GiphyService.search('party', 0, 10).then((res) => {
+    // Get initial search
+    const search = getCurrentWindowUrlParam('q');
 
-      Dom.get(SEARCH_RESULTS_ID)
-        .insertAdjacentHTML('beforeend', getGridItems(res.data));
+    // Run Homepage
+    const homeCtrl = new HomeCtrl(search);
 
-    }).catch(e => {
-      // Handle Error
-      console.log(e)
-    })
   });

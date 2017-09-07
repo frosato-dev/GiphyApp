@@ -13,3 +13,12 @@ export default (url, ...keys) => {
     return acc;
   },{});
 }
+
+export const getUrlParam = (url, key) => {
+  var url = new URL(url);
+  return url.searchParams.get(key);
+}
+
+export const getCurrentWindowUrlParam = (key) => {
+  return getUrlParam(window.location, key)
+}
