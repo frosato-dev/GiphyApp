@@ -18,7 +18,7 @@ export default class SearchCtrl {
     this._searchClear = Dom.get(SEARCH_FORM_CLEAR_CLASS)[0];
 
     this._searchInput.value = searchValue;
-    this._searchCallback = searchCallback.search.bind(searchCallback);
+    this._searchCallback = searchCallback.search.bind(searchCallback); // @TODO check how to avoid this and bind before passing Ctrl as constructor arguments
 
     this.initListeners(searchCallback);
 
@@ -41,6 +41,7 @@ export default class SearchCtrl {
     this._searchClear.addEventListener('click', () => {
       this._searchInput.value = '';
       Dom.hide(SEARCH_FORM_CLEAR_CLASS, SEARCH_FORM_CLEAR_CLASS_HIDDEN);
+      window.location.search = '';
     });
 
     this._searchInput.addEventListener('input', (e) => {
@@ -56,6 +57,7 @@ export default class SearchCtrl {
       e.preventDefault();
       const query = this._searchInput.value;
       if(query.length) {
+        window.location.search = `q=${query}`;
         this._searchCallback(query)
       }
     }
