@@ -56,6 +56,30 @@ export default class Dom {
     });
   }
 
+  /**
+   * show - Show a dom element by removing it's hidden class
+   *
+   * @param  {String} elClass target element class
+   * @param  {String} hiddenClass the hidden class to remove
+   * @return {void}
+   */
+  static show(elClass, hiddenClass) {
+    const el = Dom.get(elClass)[0]
+    Dom.removeClass(el, hiddenClass)
+  }
+
+  /**
+   * show - Show a dom element by adding it's hidden class
+   *
+   * @param  {String} elClass target element class
+   * @param  {String} hiddenClass the hidden class to add
+   * @return {void}
+   */
+  static hide(elClass, hiddenClass) {
+    const el = Dom.get(elClass)[0]
+    Dom.addClass(el, hiddenClass)
+  }
+
   // @TODO to es6
   static hasClass(el, className) {
     const _className = className.replace('.', '')

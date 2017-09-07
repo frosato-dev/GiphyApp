@@ -59,6 +59,8 @@ export default class HomeCtrl {
         HomeCtrl.replaceList(list);
         if(!list.length){
           HomeCtrl.showNoResults();
+        } else {
+          HomeCtrl.hideNoResults()
         }
         break;
       case ACTION_FAVORITES_REMOVE:
@@ -74,22 +76,19 @@ export default class HomeCtrl {
   // DOM MANIPULATION METHODS
   // static to avoid context issue with 'this' - @TODO understand 'this'
   //
-
+  //
   static showNoResults() {
-    const el = Dom.get(RESULT_EMPTY_CLASS)[0]
-    Dom.removeClass(el, RESULT_EMPTY_CLASS_HIDDEN)
+    Dom.show(RESULT_EMPTY_CLASS, RESULT_EMPTY_CLASS_HIDDEN);
   }
   static hideNoResults() {
-    const el = Dom.get(RESULT_EMPTY_CLASS)[0]
-    Dom.addClass(el, RESULT_EMPTY_CLASS_HIDDEN)
+    Dom.hide(RESULT_EMPTY_CLASS, RESULT_EMPTY_CLASS_HIDDEN);
   }
 
   static hideOrShowLoadMore() {
-    const el = Dom.get(LOAD_MORE_CLASS)[0]
     if(Store.getInstance().canLoadMore()) {
-      Dom.removeClass(el, LOAD_MORE_CLASS_HIDDEN)
+      Dom.show(LOAD_MORE_CLASS, LOAD_MORE_CLASS_HIDDEN)
     } else {
-      Dom.addClass(el, LOAD_MORE_CLASS_HIDDEN)
+      Dom.hide(LOAD_MORE_CLASS, LOAD_MORE_CLASS_HIDDEN)
     }
   }
 

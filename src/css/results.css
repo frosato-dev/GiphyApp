@@ -9,7 +9,9 @@
   display: none;
 }
 
-.results__grid {}
+.results__grid {
+  margin-bottom: 2rem;
+}
 
 .results__loading,
 .results__empty {
@@ -26,4 +28,19 @@
   width: 100px;
   background: url('./assets/img/loader.svg') no-repeat 50% 50%;
   background-size: contain;
+}
+
+.results__more {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: #C50A3D; /* Red */
+  border: none;
+  width: 100%;
+  padding: 1rem 0;
+  text-align: center;
+  color: #fff;
+  font-size: 1rem;
+  text-transform: uppercase;
 }
