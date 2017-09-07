@@ -13,7 +13,7 @@ module.exports = (env, argv) => {
   return {
     //context: __dirname,
     target: 'web',
-    entry: path.join(Paths.APP, 'index.js'),
+    entry: [ 'babel-polyfill', path.join(Paths.APP, 'index.js') ],
     output: {
       // options related to how webpack emits results
 
