@@ -5,7 +5,6 @@ import getGridItems from './../templates/get-grid-items';
 import {
   ADD as ACTION_ADD,
   REPLACE as ACTION_REPLACE,
-  REMOVE as ACTION_REMOVE,
 } from './../constants/actions';
 import {
   SEARCH_INPUT_CLASS,
@@ -67,12 +66,6 @@ export default class HomeCtrl {
         } else {
           HomeCtrl.hideNoResults()
         }
-        break;
-      case ACTION_FAVORITES_REMOVE:
-
-        break;
-      case ACTION_FAVORITES_REMOVE:
-
         break;
     }
   }
