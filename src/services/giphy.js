@@ -20,8 +20,9 @@ export default class GiphySerice {
   static search(query, offset = 0, limit = 25){
     const endPoint = `${BASE_URL}/v1/gifs/search`;
     return Api.get(endPoint, {
+      offset,
+      limit,
       q: query,
-      limit: limit,
       api_key: API_KEY,
       fmt: FORMAT,
     });

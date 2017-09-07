@@ -7,6 +7,7 @@ import Dom from './utils/dom';
 import HomeCtrl from './controllers/home';
 import SearchCtrl from './controllers/search';
 import FavoritesCtrl from './controllers/favorites';
+import Store from './store';
 import { FAVORITES as ROUTE_FAVORITES } from './constants/routes';
 
 Dom.ready()
@@ -25,6 +26,7 @@ Dom.ready()
       }
     };
     const _getRoute = getRoute(Routes);
+    const store = Store.getInstance();
 
     let searchCtrl;
 
@@ -45,7 +47,7 @@ Dom.ready()
         if(route.path !== nextRoute.path) {
           route.controller.unMount();
         }
-        nextRoute.controller.render();
+        nextRoute.controller.render(store);
       })
 
       // Set title

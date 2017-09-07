@@ -1,47 +1,93 @@
+import Store from './../store';
 import GiphyService from './../services/giphy';
 import Dom from './../utils/dom';
 import getGridItems from './../templates/get-grid-items';
 import {
+  ADD as ACTION_ADD,
+  REPLACE as ACTION_REPLACE,
+  REMOVE as ACTION_REMOVE,
+} from './../constants/actions';
+import {
   SEARCH_INPUT_CLASS,
-  SEARCH_RESULTS_ID
+  SEARCH_RESULTS_ID,
+  LOAD_MORE_CLASS,
+  LOAD_MORE_CLASS_HIDDEN,
  } from './../constants/dom-selector';
 
-const SEARCH_LIMIT = 10
+const SEARCH_LIMIT = 25 // 25 is the API default value is none provided anyway
 
 export default class HomeCtrl {
 
+  constructor() {
+    this._lastQuery = '';
+    Dom.get(LOAD_MORE_CLASS)[0].addEventListener('click', () => this.loadMore());
+  }
+
   async search(query) {
+    this._lastQuery = query;
     const offset = 0;
     const res = await GiphyService.search(query, offset, SEARCH_LIMIT);
-    // update store ?
-    this.appendToList(res.data);
+    Store.getInstance().replace('home', res);
   }
 
   async loadMore() {
-    const lastQuery = ''; // use store
-    const offset = SEARCH_LIMIT;
-    const res = await GiphyService.search(lastQuery, offset, SEARCH_LIMIT);
-    // update store ?
-    this.appendToList(res.data);
-  }
-
-  // put this into a class that watch store change
-  appendToList(data) {
-    Dom.get(SEARCH_RESULTS_ID)
-      .insertAdjacentHTML('beforeend', getGridItems(data));
-  }
-
-  // put this into a class that watch store change
-  replaceList(data) {
-    Dom.get(SEARCH_RESULTS_ID)
-      .replaceWith(getGridItems(data));
+    const offset = Store.getInstance().pagination.offset + SEARCH_LIMIT; //Store.getInstance().home.length;
+    const res = await GiphyService.search(this._lastQuery, offset, SEARCH_LIMIT);
+    Store.getInstance().add('home', res);
   }
 
   unMount() {
-    // Remove listeners
+    // @TODO Remove listeners
+    Store.getInstance().unsubscribe(this._onStoreChange);
   }
 
   render() {
+    Store.getInstance().subscribe(this._onStoreChange);
+  }
 
+  _onStoreChange(key, action) {
+    const list = Store.getInstance().home;
+    console.log(list, list.length)
+    switch (action) {
+      case ACTION_ADD:
+        HomeCtrl.appendToList(list.slice(
+          list.length - SEARCH_LIMIT,
+          list.length
+        ));
+        break;
+      case ACTION_REPLACE:
+        HomeCtrl.replaceList(list);
+        break;
+      case ACTION_FAVORITES_REMOVE:
+
+        break;
+      case ACTION_FAVORITES_REMOVE:
+
+        break;
+    }
+  }
+
+  static hideOrShowLoadMore() {
+    const el = Dom.get(LOAD_MORE_CLASS)[0]
+    if(Store.getInstance().canLoadMore()) {
+      Dom.addClass(el, LOAD_MORE_CLASS_HIDDEN);
+    } else {
+      Dom.removeClass(el, LOAD_MORE_CLASS_HIDDEN)
+    }
+  }
+
+  // static to avoid context issue with 'this' - @TODO understand 'this'
+  static appendToList(data) {
+    const html = getGridItems(data);
+    Dom.get(SEARCH_RESULTS_ID)
+      .insertAdjacentHTML('beforeend', html);
+    HomeCtrl.hideOrShowLoadMore();
+  }
+
+  static replaceList(data) {
+
+    const html = getGridItems(data);
+    Dom.get(SEARCH_RESULTS_ID).innerHTML = html;
+    HomeCtrl.hideOrShowLoadMore();
   }
 }

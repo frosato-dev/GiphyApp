@@ -2,6 +2,7 @@
   padding: 1rem;
 }
 
+.results__more--hidden,
 .results__loading--hidden,
 .results__empty--hidden,
 .results__grid--hidden {

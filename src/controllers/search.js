@@ -28,6 +28,6 @@ export default class SearchCtrl {
   }
 
   initListeners(searchCallback) {
-    this._searchInput.addEventListener('input', (e) => this._searchCallback(e.target.value));
+    this._searchInput.addEventListener('change', (e) => this._searchCallback(e.target.value));
   }
 }
