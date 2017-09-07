@@ -58,25 +58,28 @@ export default class Dom {
 
   // @TODO to es6
   static hasClass(el, className) {
+    const _className = className.replace('.', '')
     if (el.classList)
-      return el.classList.contains(className)
+      return el.classList.contains(_className)
     else
-      return !!el.className.match(new RegExp('(\\s|^)' + className + '(\\s|$)'))
+      return !!el.className.match(new RegExp('(\\s|^)' + _className + '(\\s|$)'))
   }
 
   // @TODO to es6
   static addClass(el, className) {
+    const _className = className.replace('.', '')
     if (el.classList)
-      el.classList.add(className)
-    else if (!Dom.hasClass(el, className)) el.className += " " + className
+      el.classList.add(_className)
+    else if (!Dom.hasClass(el, _className)) el.className += " " + _className
   }
 
   // @TODO to es6
   static removeClass(el, className) {
+    const _className = className.replace('.', '')
     if (el.classList)
-      el.classList.remove(className)
-    else if (Dom.hasClass(el, className)) {
-      var reg = new RegExp('(\\s|^)' + className + '(\\s|$)')
+      el.classList.remove(_className)
+    else if (Dom.hasClass(el, _className)) {
+      var reg = new RegExp('(\\s|^)' + _className + '(\\s|$)')
       el.className = el.className.replace(reg, ' ')
     }
   }

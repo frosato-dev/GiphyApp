@@ -6,7 +6,7 @@
 .results__loading--hidden,
 .results__empty--hidden,
 .results__grid--hidden {
-  /*display: none;*/
+  display: none;
 }
 
 .results__grid {}

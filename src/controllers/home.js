@@ -12,6 +12,8 @@ import {
   SEARCH_RESULTS_ID,
   LOAD_MORE_CLASS,
   LOAD_MORE_CLASS_HIDDEN,
+  RESULT_EMPTY_CLASS,
+  RESULT_EMPTY_CLASS_HIDDEN,
  } from './../constants/dom-selector';
 
 const SEARCH_LIMIT = 25 // 25 is the API default value is none provided anyway
@@ -37,7 +39,6 @@ export default class HomeCtrl {
   }
 
   unMount() {
-    // @TODO Remove listeners
     Store.getInstance().unsubscribe(this._onStoreChange);
   }
 
@@ -56,6 +57,9 @@ export default class HomeCtrl {
         break;
       case ACTION_REPLACE:
         HomeCtrl.replaceList(list);
+        if(!list.length){
+          HomeCtrl.showNoResults();
+        }
         break;
       case ACTION_FAVORITES_REMOVE:
 
@@ -64,18 +68,31 @@ export default class HomeCtrl {
 
         break;
     }
+  }
+
+  //
+  // DOM MANIPULATION METHODS
+  // static to avoid context issue with 'this' - @TODO understand 'this'
+  //
+
+  static showNoResults() {
+    const el = Dom.get(RESULT_EMPTY_CLASS)[0]
+    Dom.removeClass(el, RESULT_EMPTY_CLASS_HIDDEN)
+  }
+  static hideNoResults() {
+    const el = Dom.get(RESULT_EMPTY_CLASS)[0]
+    Dom.addClass(el, RESULT_EMPTY_CLASS_HIDDEN)
   }
 
   static hideOrShowLoadMore() {
     const el = Dom.get(LOAD_MORE_CLASS)[0]
     if(Store.getInstance().canLoadMore()) {
-      Dom.addClass(el, LOAD_MORE_CLASS_HIDDEN);
-    } else {
       Dom.removeClass(el, LOAD_MORE_CLASS_HIDDEN)
+    } else {
+      Dom.addClass(el, LOAD_MORE_CLASS_HIDDEN)
     }
   }
 
-  // static to avoid context issue with 'this' - @TODO understand 'this'
   static appendToList(data) {
     const html = getGridItems(data);
     Dom.get(SEARCH_RESULTS_ID)
