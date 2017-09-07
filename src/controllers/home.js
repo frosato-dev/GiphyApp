@@ -10,8 +10,8 @@ import {
 import {
   SEARCH_INPUT_CLASS,
   SEARCH_RESULTS_ID,
-  LOAD_MORE_CLASS,
-  LOAD_MORE_CLASS_HIDDEN,
+  RESULT_LOAD_MORE_CLASS,
+  RESULT_LOAD_MORE_CLASS_HIDDEN,
   RESULT_EMPTY_CLASS,
   RESULT_EMPTY_CLASS_HIDDEN,
  } from './../constants/dom-selector';
@@ -22,7 +22,7 @@ export default class HomeCtrl {
 
   constructor() {
     this._lastQuery = '';
-    Dom.get(LOAD_MORE_CLASS)[0].addEventListener('click', () => this.loadMore());
+    Dom.get(RESULT_LOAD_MORE_CLASS)[0].addEventListener('click', () => this.loadMore());
   }
 
   async search(query) {
@@ -86,9 +86,9 @@ export default class HomeCtrl {
 
   static hideOrShowLoadMore() {
     if(Store.getInstance().canLoadMore()) {
-      Dom.show(LOAD_MORE_CLASS, LOAD_MORE_CLASS_HIDDEN)
+      Dom.show(RESULT_LOAD_MORE_CLASS, RESULT_LOAD_MORE_CLASS_HIDDEN)
     } else {
-      Dom.hide(LOAD_MORE_CLASS, LOAD_MORE_CLASS_HIDDEN)
+      Dom.hide(RESULT_LOAD_MORE_CLASS, RESULT_LOAD_MORE_CLASS_HIDDEN)
     }
   }
 
