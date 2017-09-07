@@ -14,6 +14,8 @@ import {
   RESULT_LOAD_MORE_CLASS_HIDDEN,
   RESULT_EMPTY_CLASS,
   RESULT_EMPTY_CLASS_HIDDEN,
+  RESULT_LOADING_CLASS,
+  RESULT_LOADING_CLASS_HIDDEN,
  } from './../constants/dom-selector';
 
 const SEARCH_LIMIT = 25 // 25 is the API default value is none provided anyway
@@ -26,6 +28,8 @@ export default class HomeCtrl {
   }
 
   async search(query) {
+    HomeCtrl.hideNoResults();
+    HomeCtrl.showLoading();
     this._lastQuery = query;
     const offset = 0;
     const res = await GiphyService.search(query, offset, SEARCH_LIMIT);
@@ -33,6 +37,7 @@ export default class HomeCtrl {
   }
 
   async loadMore() {
+    HomeCtrl.showLoading();
     const offset = Store.getInstance().pagination.offset + SEARCH_LIMIT; //Store.getInstance().home.length;
     const res = await GiphyService.search(this._lastQuery, offset, SEARCH_LIMIT);
     Store.getInstance().add(res);
@@ -72,6 +77,7 @@ export default class HomeCtrl {
     }
   }
 
+
   //
   // DOM MANIPULATION METHODS
   // static to avoid context issue with 'this' - @TODO understand 'this'
@@ -83,8 +89,14 @@ export default class HomeCtrl {
   static hideNoResults() {
     Dom.hide(RESULT_EMPTY_CLASS, RESULT_EMPTY_CLASS_HIDDEN);
   }
+  static showLoading() {
+    Dom.show(RESULT_LOADING_CLASS, RESULT_LOADING_CLASS_HIDDEN);
+  }
+  static hideLoading() {
+    Dom.hide(RESULT_LOADING_CLASS, RESULT_LOADING_CLASS_HIDDEN);
+  }
 
-  static hideOrShowLoadMore() {
+  static toggleLoadMore() {
     if(Store.getInstance().canLoadMore()) {
       Dom.show(RESULT_LOAD_MORE_CLASS, RESULT_LOAD_MORE_CLASS_HIDDEN)
     } else {
@@ -93,15 +105,17 @@ export default class HomeCtrl {
   }
 
   static appendToList(data) {
+    HomeCtrl.hideLoading();
     const html = getGridItems(data);
     Dom.get(SEARCH_RESULTS_ID)
       .insertAdjacentHTML('beforeend', html);
-    HomeCtrl.hideOrShowLoadMore();
+    HomeCtrl.toggleLoadMore();
   }
 
   static replaceList(data) {
+    HomeCtrl.hideLoading();
     const html = getGridItems(data);
     Dom.get(SEARCH_RESULTS_ID).innerHTML = html;
-    HomeCtrl.hideOrShowLoadMore();
+    HomeCtrl.toggleLoadMore();
   }
 }

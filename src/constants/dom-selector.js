@@ -10,8 +10,8 @@ export const RESULT_LOAD_MORE_CLASS_HIDDEN = '.results__more--hidden';
 export const RESULT_EMPTY_CLASS = '.results__empty';
 export const RESULT_EMPTY_CLASS_HIDDEN = '.results__empty--hidden';
 
-export const RESULT_LOADING_CLASS = 'results__loading';
-export const RESULT_LOADING_CLASS_HIDDEN = 'results__loading--hidden';
+export const RESULT_LOADING_CLASS = '.results__loading';
+export const RESULT_LOADING_CLASS_HIDDEN = '.results__loading--hidden';
 
 export const SEARCH_FORM_CLASS = '.header__form';
 export const SEARCH_FORM_CLEAR_CLASS = '.header__form-clear';
