@@ -9,7 +9,9 @@ export default class Store {
   }
 
   unsubscribe(callback) {
-    this._subscribers.remove(callback);
+    if (this._subscribers.has(callback)){
+      this._subscribers.delete(callback);
+    }
   }
 
   onChange(key, action) {
