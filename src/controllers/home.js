@@ -10,30 +10,6 @@ const SEARCH_LIMIT = 10
 
 export default class HomeCtrl {
 
-  constructor(searchValue) {
-
-    // Get InputSearch Dom Element
-    this._searchInput = Dom.get(".header__form-input")[0];
-
-    // Set DomElements' listeners
-    this.initListeners();
-
-    // Populate Input value
-    this._searchInput.value = searchValue;
-
-    // Run initial search if needed
-    if(
-      !!this._searchInput.value &&
-      this._searchInput.value !== ''
-    ) {
-      this.search(searchValue);
-    }
-  }
-
-  initListeners() {
-    this._searchInput.addEventListener('input', (e) => this.search(e.target.value));
-  }
-
   async search(query) {
     const offset = 0;
     const res = await GiphyService.search(query, offset, SEARCH_LIMIT);
@@ -65,4 +41,7 @@ export default class HomeCtrl {
     // Remove listeners
   }
 
+  render() {
+
+  }
 }

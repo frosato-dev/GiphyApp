@@ -4,7 +4,6 @@
  * @return {String} the HTML String
  */
 export default (item) => {
-  console.log(item.images)
   return `
     <div class="grid__panel" data-id="${item.id}">
       <div class="grid__panel-content">
