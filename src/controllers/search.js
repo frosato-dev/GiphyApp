@@ -32,16 +32,34 @@ export default class SearchCtrl {
     }
   }
 
+  _setQueryInUrl(query) { // Side effect :(
+    const url = new URL(window.location)
+
+    // "w.history.pushState" avoid page reload on query change
+    // "w.location.search = `q=${query}`;" triggers a reload
+    let nextUrl = url.origin;
+    if(query.length) {
+      nextUrl += `?q=${query}`;
+    }
+    if( nextUrl != window.location){
+      window.history.pushState({
+        path:nextUrl},
+        '',
+        nextUrl
+      );
+    }
+  }
+
   setCallback(searchCallback) {
     this._searchCallback = searchCallback;
   }
 
   initListeners(searchCallback) {
 
-    this._searchClear.addEventListener('click', () => {
+    this._searchClear.addEventListener('click', (e) => {
       this._searchInput.value = '';
       Dom.hide(SEARCH_FORM_CLEAR_CLASS, SEARCH_FORM_CLEAR_CLASS_HIDDEN);
-      window.location.search = '';
+      this._setQueryInUrl('');
     });
 
     this._searchInput.addEventListener('input', (e) => {
@@ -57,7 +75,7 @@ export default class SearchCtrl {
       e.preventDefault();
       const query = this._searchInput.value;
       if(query.length) {
-        window.location.search = `q=${query}`;
+        this._setQueryInUrl(query);
         this._searchCallback(query)
       }
     }
