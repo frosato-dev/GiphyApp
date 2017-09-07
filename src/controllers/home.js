@@ -1,4 +1,4 @@
-import Store from './../store';
+import Store from './../stores/home';
 import GiphyService from './../services/giphy';
 import Dom from './../utils/dom';
 import getGridItems from './../templates/get-grid-items';
@@ -27,13 +27,13 @@ export default class HomeCtrl {
     this._lastQuery = query;
     const offset = 0;
     const res = await GiphyService.search(query, offset, SEARCH_LIMIT);
-    Store.getInstance().replace('home', res);
+    Store.getInstance().replace(res);
   }
 
   async loadMore() {
     const offset = Store.getInstance().pagination.offset + SEARCH_LIMIT; //Store.getInstance().home.length;
     const res = await GiphyService.search(this._lastQuery, offset, SEARCH_LIMIT);
-    Store.getInstance().add('home', res);
+    Store.getInstance().add(res);
   }
 
   unMount() {
@@ -45,9 +45,8 @@ export default class HomeCtrl {
     Store.getInstance().subscribe(this._onStoreChange);
   }
 
-  _onStoreChange(key, action) {
+  _onStoreChange(action) {
     const list = Store.getInstance().home;
-    console.log(list, list.length)
     switch (action) {
       case ACTION_ADD:
         HomeCtrl.appendToList(list.slice(
@@ -85,7 +84,6 @@ export default class HomeCtrl {
   }
 
   static replaceList(data) {
-
     const html = getGridItems(data);
     Dom.get(SEARCH_RESULTS_ID).innerHTML = html;
     HomeCtrl.hideOrShowLoadMore();
