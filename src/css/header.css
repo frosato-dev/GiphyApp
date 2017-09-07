@@ -75,3 +75,7 @@
   right: .75rem;
   top: .75rem;
 }
+
+.header__form-clear--hidden {
+  display: none;
+}
