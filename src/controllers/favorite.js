@@ -19,8 +19,6 @@ export default class FavoriteCtrl {
   }
 
   toggleFavorites(e) {
-    console.log('toggleFavorites', e.target) //e.target.dataset.columns
-
     if (Dom.hasClass(e.target, ICON_FAVORITE_CLASS)) {
        const item = JSON.parse(e.target.dataset.object);
        FavoriteStore.getInstance().addOrRemove(item);

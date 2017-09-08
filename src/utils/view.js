@@ -59,7 +59,6 @@ export default class View {
   static setResultText(count, total){
     const item = count > 1 ? 'gifs' : 'gif';
     const search = Dom.get(SEARCH_INPUT_CLASS)[0].value; // @Fixme, get from top, but issue with 'this' context.
-    console.log(search)
     Dom.get(RESULT_COUNT_CLASS)[0].innerHTML = `
       Viewing <span>${count}</span> ${item} on <span>${total}</span> for search: <span>${search}</span>
     `;
