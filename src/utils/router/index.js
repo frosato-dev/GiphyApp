@@ -1,3 +1,7 @@
+import Dom from './../../utils/dom';
+import { NAV} from './../../constants/dom-selector';
+import getNavItem from './../../templates/get-nav-item';
+
 /**
  * getUrlParams - Extract query parameters of a given URL
  *
@@ -36,7 +40,7 @@ export const getRoute = (routes) => (path) => {
 }
 
 /**
- * onHashChange
+ * onHashChange - /!\ is getting messy because of Dom action
  *
  * @param  {String} path the value of the hash
  * @param  {Object} routes an object containing route objects
@@ -45,15 +49,23 @@ export const getRoute = (routes) => (path) => {
 const onHashChange = (requestedPath, routes) => {
   const nextRoute = getRoute(routes)(requestedPath);
 
+  let navItems = '';
+
   // UnMount Old view(s) and Render current
   Object.values(routes).map(r => {
     if(r.path !== nextRoute.path) {
       r.controller.unMount();
+
+      // forge navigation
+      navItems += getNavItem(r);
     }
+
+    Dom.get(NAV)[0].innerHTML = navItems; // render nav
     nextRoute.controller.render();
   })
 
   document.title = nextRoute.title;
+
   return nextRoute;
 }
 

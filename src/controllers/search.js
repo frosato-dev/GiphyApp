@@ -6,11 +6,9 @@ import {
   SEARCH_FORM_CLEAR_CLASS_HIDDEN,
  } from './../constants/dom-selector';
 
-const defaultSearchCallback = () => console.log('no callback set to SearchCtrl');
-
 export default class SearchCtrl {
 
-  constructor(searchValue, searchCallback = defaultSearchCallback) {
+  constructor(searchValue, controller) {
 
     // Get InputSearch Dom Element
     this._searchInput = Dom.get(SEARCH_INPUT_CLASS)[0];
@@ -18,9 +16,9 @@ export default class SearchCtrl {
     this._searchClear = Dom.get(SEARCH_FORM_CLEAR_CLASS)[0];
 
     this._searchInput.value = searchValue;
-    this._searchCallback = searchCallback.search.bind(searchCallback); // @TODO check how to avoid this and bind before passing Ctrl as constructor arguments
+    this._searchCallback = controller.search.bind(controller); // @TODO check how to avoid passing controller and bind before passing Ctrl as constructor arguments
 
-    this.initListeners(searchCallback);
+    this.initListeners();
 
     // Run initial search if needed
     if(
@@ -32,6 +30,7 @@ export default class SearchCtrl {
     }
   }
 
+  // @TODO move into router
   _setQueryInUrl(query) { // Side effect :(
     const url = new URL(window.location)
 
@@ -50,11 +49,11 @@ export default class SearchCtrl {
     }
   }
 
-  setCallback(searchCallback) {
-    this._searchCallback = searchCallback;
+  setCallback(controller) {
+    this._searchCallback = controller.search.bind(controller);
   }
 
-  initListeners(searchCallback) {
+  initListeners() {
 
     this._searchClear.addEventListener('click', (e) => {
       this._searchInput.value = '';

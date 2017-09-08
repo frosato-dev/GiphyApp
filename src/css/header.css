@@ -76,6 +76,7 @@
   top: .75rem;
 }
 
+.header__form--hidden,
 .header__form-clear--hidden {
   display: none;
 }

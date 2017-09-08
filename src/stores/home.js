@@ -11,6 +11,7 @@ class HomeStore extends Store {
   constructor() {
     super();
     this.home = [];
+    this.isDirty = false;
     this.pagination = {
       count: 0,
       offset: 0,
@@ -22,14 +23,15 @@ class HomeStore extends Store {
     return this.pagination.total_count > this.pagination.count;
   }
 
-  // data always array
   add(response) {
+    this.isDirty = true;
     this.home = this.home.concat(response.data);
     this.pagination = response.pagination;
     this.onChange(ACTION_ADD);
   }
 
   replace(response) {
+    this.isDirty = true;
     this.home = [].concat(response.data);
     this.pagination = response.pagination;
     this.onChange(ACTION_REPLACE);
