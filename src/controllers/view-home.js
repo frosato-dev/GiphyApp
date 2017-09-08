@@ -16,6 +16,7 @@ import {
   SEARCH_RESULTS_ID,
   RESULT_LOAD_MORE_CLASS,
   RESULT_LOAD_MORE_CLASS_HIDDEN,
+  SEARCH_INPUT_CLASS, // to change
  } from './../constants/dom-selector';
 
  import { SEARCH_LIMIT } from './../constants';
@@ -42,6 +43,7 @@ export default class HomeCtrl {
     FavoriteStore.getInstance().subscribe(this._onStoreChange);
     Dom.get(RESULT_LOAD_MORE_CLASS)[0].removeEventListener('click', () => this._searchCtlr.loadMore());
     ViewHelper.clearResultGrid();
+    ViewHelper.hideResultText();
   }
 
   render() {
@@ -56,13 +58,15 @@ export default class HomeCtrl {
     switch (action) {
       case SEARCH_FETCH_NEXT_SUCCESS:{
         const list = HomeStore.getInstance().home;
+        const pagination = HomeStore.getInstance().pagination;
         const favorites = FavoriteStore.getInstance().favorites;
 
         ViewHelper.appendToList(list.slice(
           list.length - SEARCH_LIMIT,
           list.length
         ), favorites);
-        ViewHelper.toggleLoadMore();
+        ViewHelper.toggleLoadMore(HomeStore.getInstance().canLoadMore());
+        ViewHelper.setResultText(list.length, pagination.total_count)
         break;
       }
       case FAVORITE_REMOVE_SUCCESS: // Move to a function that get the dom element and update it
@@ -72,17 +76,14 @@ export default class HomeCtrl {
         const favorites = FavoriteStore.getInstance().favorites;
 
         ViewHelper.replaceList(list, favorites);
-
-        if(HomeStore.getInstance().canLoadMore()) {
-          ViewHelper.showLoadMore();
-        } else {
-          ViewHelper.hideLoadMore();
-        }
-
+        ViewHelper.toggleLoadMore(HomeStore.getInstance().canLoadMore());
+        
         if(!list.length && HomeStore.getInstance().isDirty){
           ViewHelper.showNoResults();
         } else {
           ViewHelper.hideNoResults();
+          const total = HomeStore.getInstance().pagination.total_count
+          ViewHelper.setResultText(list.length, total);
         }
         break;
       }

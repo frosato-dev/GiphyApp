@@ -2,11 +2,24 @@
   padding: 1rem;
 }
 
+.results__count--hidden,
 .results__more--hidden,
 .results__loading--hidden,
 .results__empty--hidden,
 .results__grid--hidden {
   display: none;
+}
+
+.results__count {
+  margin: 1rem 0;
+  text-align: center;
+  font-weight: bold;
+  font-size: 1.5em;
+  color: #fd583d; /* Orange */
+
+}
+.results__count > span{
+  color: #571845; /* Purple */
 }
 
 .results__grid {

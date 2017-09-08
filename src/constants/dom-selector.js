@@ -1,6 +1,4 @@
-export const APP_ID = '#app';
 export const SEARCH_RESULTS_ID = '#results';
-export const FAVORITES_ID = '#favorites'
 
 export const RESULT_LOAD_MORE_CLASS = '.results__more';
 export const RESULT_LOAD_MORE_CLASS_HIDDEN = '.results__more--hidden';
@@ -10,6 +8,9 @@ export const RESULT_EMPTY_CLASS_HIDDEN = '.results__empty--hidden';
 
 export const RESULT_LOADING_CLASS = '.results__loading';
 export const RESULT_LOADING_CLASS_HIDDEN = '.results__loading--hidden';
+
+export const RESULT_COUNT_CLASS = '.results__count';
+export const RESULT_COUNT_CLASS_HIDDEN = '.results__count--hidden';
 
 export const SEARCH_FORM_CLASS = '.header__form';
 export const SEARCH_FORM_CLASS_HIDDEN = '.header__form--hidden';
