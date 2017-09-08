@@ -61,8 +61,9 @@ const onHashChange = (requestedPath, routes) => {
     }
 
     Dom.get(NAV)[0].innerHTML = navItems; // render nav
-    nextRoute.controller.render();
-  })
+  });
+
+  nextRoute.controller.render();
 
   document.title = nextRoute.title;
 

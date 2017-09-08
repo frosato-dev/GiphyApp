@@ -11,11 +11,12 @@ Dom.ready()
   .then(() => {
 
     let searchCtrl;
+    const search = getCurrentWindowUrlParam('q');
 
     const routeChangeCallback = (nextRoute) => {
       // Bind Search to Next Controller
       if(!searchCtrl) {
-        const search = getCurrentWindowUrlParam('q'); // Get initial search query
+         // Get initial search query
         searchCtrl = new SearchCtrl(search, nextRoute.controller);
       } else {
         searchCtrl.setCallback(nextRoute.controller); // if controller.search is passed,  issue with "this" context. @TODO Findout
@@ -23,5 +24,5 @@ Dom.ready()
     };
 
     // Init Router
-    Router(Routes, routeChangeCallback);
+    Router(Routes(search), routeChangeCallback);
   });

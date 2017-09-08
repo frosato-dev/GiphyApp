@@ -3,10 +3,10 @@ import FavoritesCtrl from './controllers/favorites';
 
 import { FAVORITES as ROUTE_FAVORITES } from './constants/routes';
 
-export default {
+export default (onLoadSearchQuery) => ({
   'home' : {
     'path' : '',
-    'controller': new HomeCtrl(),
+    'controller': new HomeCtrl(onLoadSearchQuery),
     'title': 'Homepage',
     'hash' : '#home'
   },
@@ -16,4 +16,4 @@ export default {
     'title': 'Favorites',
     'hash' : '#favorites'
   }
-};
+});

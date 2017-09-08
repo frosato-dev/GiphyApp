@@ -18,12 +18,11 @@ import {
   RESULT_LOADING_CLASS_HIDDEN,
  } from './../constants/dom-selector';
 
-const SEARCH_LIMIT = 25
+import { SEARCH_LIMIT } from './../constants';
 
 export default class BaseCtrl {
 
   constructor() {
-    this._searchLimit = SEARCH_LIMIT;
     this._lastQuery = '';
     this._service = () => ({
       search: () => false,

@@ -11,11 +11,21 @@ import {
   SEARCH_RESULTS_ID,
  } from './../constants/dom-selector';
 
+ import { SEARCH_LIMIT } from './../constants';
+
 export default class HomeCtrl extends BaseCtrl {
 
-  constructor() {
+  constructor(searchValue) {
     super();
     this._service = GiphyService;
+
+    // Run initial search if needed
+    if(
+      !!searchValue &&
+      searchValue !== ''
+    ) {
+      this.search(searchValue)
+    }
   }
 
   unMount() {
@@ -25,16 +35,16 @@ export default class HomeCtrl extends BaseCtrl {
 
   render() {
     HomeCtrl.showSearchForm();
-    super.render();
     this._onStoreChange(ACTION_REPLACE);
+    super.render();
   }
 
   _onStoreChange(action) {
-    const list = Store.getInstance().home
+    const list = Store.getInstance().home;
     switch (action) {
       case ACTION_ADD:
         HomeCtrl.appendToList(list.slice(
-          list.length - this._searchLimit,
+          list.length - SEARCH_LIMIT,
           list.length
         ));
         break;
