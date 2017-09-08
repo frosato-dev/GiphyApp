@@ -3,6 +3,8 @@ import getGridItems from './../templates/get-grid-items';
 import {
   SEARCH_FORM_CLASS,
   SEARCH_FORM_CLASS_HIDDEN,
+  SEARCH_FORM_CLEAR_CLASS,
+  SEARCH_FORM_CLEAR_CLASS_HIDDEN,
   SEARCH_INPUT_CLASS,
   SEARCH_RESULTS_ID,
   RESULT_LOAD_MORE_CLASS,
@@ -33,6 +35,18 @@ export default class View {
   }
   static hideSearchForm() {
     Dom.hide(SEARCH_FORM_CLASS, SEARCH_FORM_CLASS_HIDDEN);
+  }
+  static showInputFormClear(){
+    Dom.show(SEARCH_FORM_CLEAR_CLASS, SEARCH_FORM_CLEAR_CLASS_HIDDEN);
+  }
+  static hideInputFormClear(){
+    Dom.hide(SEARCH_FORM_CLEAR_CLASS, SEARCH_FORM_CLEAR_CLASS_HIDDEN);
+  }
+  static showLoadMore(){
+    Dom.show(RESULT_LOAD_MORE_CLASS, RESULT_LOAD_MORE_CLASS_HIDDEN)
+  }
+  static hideLoadMore(){
+    Dom.hide(RESULT_LOAD_MORE_CLASS, RESULT_LOAD_MORE_CLASS_HIDDEN)
   }
 
   static clearResultGrid() {

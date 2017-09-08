@@ -1,5 +1,5 @@
-import HomeCtrl from './controllers/home';
-import FavoritesCtrl from './controllers/favorites';
+import HomeCtrl from './controllers/view-home';
+import FavoritesCtrl from './controllers/view-favorites';
 
 import { FAVORITES as ROUTE_FAVORITES } from './constants/routes';
 

@@ -1,10 +1,15 @@
 import Dom from './../utils/dom';
+import HomeStore from './../stores/home';
+import GiphyService from './../services/giphy';
+import ViewHelper from './../utils/view';
+
 import {
   SEARCH_FORM_CLASS,
   SEARCH_INPUT_CLASS,
   SEARCH_FORM_CLEAR_CLASS,
-  SEARCH_FORM_CLEAR_CLASS_HIDDEN,
  } from './../constants/dom-selector';
+
+import { SEARCH_LIMIT } from './../constants';
 
 export default class SearchCtrl {
 
@@ -16,7 +21,7 @@ export default class SearchCtrl {
     this._searchClear = Dom.get(SEARCH_FORM_CLEAR_CLASS)[0];
 
     this._searchInput.value = searchValue;
-    this._searchCallback = controller.search.bind(controller); // @TODO check how to avoid passing controller and bind before passing Ctrl as constructor arguments
+    this._lastQuery = '';
 
     this.initListeners();
 
@@ -25,8 +30,24 @@ export default class SearchCtrl {
       !!this._searchInput.value &&
       this._searchInput.value !== ''
     ) {
-      Dom.show(SEARCH_FORM_CLEAR_CLASS, SEARCH_FORM_CLEAR_CLASS_HIDDEN);
+      ViewHelper.showInputFormClear();
     }
+  }
+
+  async search(query) {
+    ViewHelper.hideNoResults();
+    ViewHelper.showLoading();
+    this._lastQuery = query;
+    const offset = 0;
+    const res = await GiphyService.search(query, offset, SEARCH_LIMIT);
+    HomeStore.getInstance().replace(res);
+  }
+
+  async loadMore() {
+    ViewHelper.showLoading();
+    const offset = HomeStore.getInstance().pagination.offset + SEARCH_LIMIT;
+    const res = await GiphyService.search(this._lastQuery, offset, SEARCH_LIMIT);
+    HomeStore.getInstance().add(res);
   }
 
   // @TODO move into router
@@ -48,24 +69,20 @@ export default class SearchCtrl {
     }
   }
 
-  setCallback(controller) {
-    this._searchCallback = controller.search.bind(controller);
-  }
-
   initListeners() {
 
     this._searchClear.addEventListener('click', (e) => {
       this._searchInput.value = '';
-      Dom.hide(SEARCH_FORM_CLEAR_CLASS, SEARCH_FORM_CLEAR_CLASS_HIDDEN);
+      ViewHelper.hideInputFormClear();
       this._setQueryInUrl('');
     });
 
     this._searchInput.addEventListener('input', (e) => {
       const query = e.target.value;
       if(!query.length) {
-        Dom.hide(SEARCH_FORM_CLEAR_CLASS, SEARCH_FORM_CLEAR_CLASS_HIDDEN);
+        ViewHelper.hideInputFormClear();
       } else {
-        Dom.show(SEARCH_FORM_CLEAR_CLASS, SEARCH_FORM_CLEAR_CLASS_HIDDEN);
+        ViewHelper.showInputFormClear();
       }
     })
 
@@ -74,7 +91,7 @@ export default class SearchCtrl {
       const query = this._searchInput.value;
       if(query.length) {
         this._setQueryInUrl(query);
-        this._searchCallback(query)
+        this.search(query)
       }
     }
   }

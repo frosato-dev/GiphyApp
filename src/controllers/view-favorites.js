@@ -1,4 +1,3 @@
-import BaseCtrl from './base';
 import FavoriteStore from './../stores/favorites';
 import Dom from './../utils/dom';
 import ViewHelper from './../utils/view';
@@ -12,22 +11,15 @@ import {
   SEARCH_RESULTS_ID,
  } from './../constants/dom-selector';
 
-export default class FavoritesCtrl extends BaseCtrl {
-
-  constructor() {
-    super();
-    this._stores = [ FavoriteStore ];
-  }
+export default class FavoritesCtrl {
 
   unMount() {
     FavoriteStore.getInstance().unsubscribe(this._onStoreChange);
-    super.unMount();
   }
 
   render() {
     FavoriteStore.getInstance().subscribe(this._onStoreChange);
     ViewHelper.hideSearchForm();
-    super.render();
     this._onStoreChange(FAVORITE_FETCH_SUCCESS);
   }
 

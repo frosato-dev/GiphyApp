@@ -1,9 +1,9 @@
 import HomeStore from './../stores/home';
 import FavoriteStore from './../stores/favorites';
-import BaseCtrl from './base';
 import GiphyService from './../services/giphy';
 import Dom from './../utils/dom';
 import ViewHelper from './../utils/view';
+import SearchCtrl from './../controllers/search';
 
 import {
   SEARCH_FETCH_NEXT_SUCCESS,
@@ -20,52 +20,36 @@ import {
 
  import { SEARCH_LIMIT } from './../constants';
 
-export default class HomeCtrl extends BaseCtrl {
+export default class HomeCtrl {
 
   constructor(searchValue) {
-    super();
+    this._lastQuery = '';
     this._service = GiphyService;
-    this._stores = [ HomeStore, FavoriteStore ]
+    this._stores = [ HomeStore, FavoriteStore ];
+
+    this._searchCtlr = new SearchCtrl(searchValue);
 
     if( // Run initial search if needed
       !!searchValue &&
       searchValue !== ''
     ) {
-      this.search(searchValue)
+      this._searchCtlr.search(searchValue);
     }
-  }
-
-  async search(query) {
-    ViewHelper.hideNoResults();
-    ViewHelper.showLoading();
-    this._lastQuery = query;
-    const offset = 0;
-    const res = await this._service.search(query, offset, SEARCH_LIMIT);
-    HomeStore.getInstance().replace(res);
-  }
-
-  async loadMore() {
-    ViewHelper.showLoading();
-    const offset = HomeStore.getInstance().pagination.offset + SEARCH_LIMIT;
-    const res = await this._service.search(this._lastQuery, offset, SEARCH_LIMIT);
-    HomeStore.getInstance().add(res);
   }
 
   unMount() {
     HomeStore.getInstance().subscribe(this._onStoreChange);
     FavoriteStore.getInstance().subscribe(this._onStoreChange);
-    Dom.get(RESULT_LOAD_MORE_CLASS)[0].removeEventListener('click', () => this.loadMore());
+    Dom.get(RESULT_LOAD_MORE_CLASS)[0].removeEventListener('click', () => this._searchCtlr.loadMore());
     ViewHelper.clearResultGrid();
-    super.unMount();
   }
 
   render() {
     HomeStore.getInstance().subscribe(this._onStoreChange);
     FavoriteStore.getInstance().subscribe(this._onStoreChange);
     ViewHelper.showSearchForm();
-    Dom.get(RESULT_LOAD_MORE_CLASS)[0].addEventListener('click', () => this.loadMore());
+    Dom.get(RESULT_LOAD_MORE_CLASS)[0].addEventListener('click', () => this._searchCtlr.loadMore());
     this._onStoreChange(SEARCH_FETCH_SUCCESS);
-    super.render();
   }
 
   _onStoreChange(action) {
@@ -90,15 +74,15 @@ export default class HomeCtrl extends BaseCtrl {
         ViewHelper.replaceList(list, favorites);
 
         if(HomeStore.getInstance().canLoadMore()) {
-          Dom.show(RESULT_LOAD_MORE_CLASS, RESULT_LOAD_MORE_CLASS_HIDDEN)
+          ViewHelper.showLoadMore();
         } else {
-          Dom.hide(RESULT_LOAD_MORE_CLASS, RESULT_LOAD_MORE_CLASS_HIDDEN)
+          ViewHelper.hideLoadMore();
         }
 
         if(!list.length && HomeStore.getInstance().isDirty){
           ViewHelper.showNoResults();
         } else {
-          ViewHelper.hideNoResults()
+          ViewHelper.hideNoResults();
         }
         break;
       }
