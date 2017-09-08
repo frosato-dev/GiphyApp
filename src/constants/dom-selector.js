@@ -18,3 +18,5 @@ export const SEARCH_FORM_CLEAR_CLASS_HIDDEN = '.header__form-clear--hidden';
 export const SEARCH_INPUT_CLASS = '.header__form-input';
 
 export const NAV = '.header__nav';
+
+export const ICON_FAVORITE_CLASS = '.icon-btn__favorite';

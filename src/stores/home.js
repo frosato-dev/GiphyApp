@@ -1,11 +1,15 @@
 import Store from './base';
 
 import {
-  ADD as ACTION_ADD,
-  REPLACE as ACTION_REPLACE,
-  REMOVE as ACTION_REMOVE,
+  SEARCH_FETCH_NEXT_SUCCESS,
+  SEARCH_FETCH,
+  SEARCH_FETCH_SUCCESS,
+  SEARCH_FETCH_FAILED,
 } from './../constants/actions';
-
+import {
+  RESULT_LOAD_MORE_CLASS,
+  RESULT_LOAD_MORE_CLASS_HIDDEN,
+ } from './../constants/dom-selector';
 class HomeStore extends Store {
 
   constructor() {
@@ -27,14 +31,14 @@ class HomeStore extends Store {
     this.isDirty = true;
     this.home = this.home.concat(response.data);
     this.pagination = response.pagination;
-    this.onChange(ACTION_ADD);
+    this.onChange(SEARCH_FETCH_NEXT_SUCCESS);
   }
 
   replace(response) {
     this.isDirty = true;
     this.home = [].concat(response.data);
     this.pagination = response.pagination;
-    this.onChange(ACTION_REPLACE);
+    this.onChange(SEARCH_FETCH_SUCCESS);
   }
 
   flush() {

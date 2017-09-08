@@ -26,7 +26,6 @@ export default class SearchCtrl {
       this._searchInput.value !== ''
     ) {
       Dom.show(SEARCH_FORM_CLEAR_CLASS, SEARCH_FORM_CLEAR_CLASS_HIDDEN);
-      //this._searchCallback(searchValue)
     }
   }
 

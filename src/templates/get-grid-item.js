@@ -3,7 +3,18 @@
  *
  * @return {String} the HTML String
  */
-export default (item) => {
+export default (item, isFavorite) => {
+  const { id, bitly_url, images } = item;
+  const stringifiedObject = JSON.stringify({
+    id,
+    bitly_url,
+    images: {
+      downsized: {
+        url: images.downsized.url
+      },
+    },
+  })
+  const favoriteClass = isFavorite ? 'icon-btn__favorite--active' : '';
   return `
     <div class="grid__panel" data-id="${item.id}">
       <div class="grid__panel-content">
@@ -13,7 +24,12 @@ export default (item) => {
         >
       </div>
       <div class="grid__panel-action">
-        <button class="grid__panel-action-btn icon-btn icon-btn__favorite icon-btn__favorite--active">&nbsp;</button>
+        <button
+          class="grid__panel-action-btn icon-btn icon-btn__favorite ${favoriteClass}"
+          data-object='${stringifiedObject}'
+        >
+          &nbsp;
+        </button>
         <button class="grid__panel-action-btn icon-btn icon-btn__copy">&nbsp;</button>
       </div>
     </div>

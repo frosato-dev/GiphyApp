@@ -1,10 +1,12 @@
 import BaseCtrl from './base';
-import Store from './../stores/favorites';
+import FavoriteStore from './../stores/favorites';
 import Dom from './../utils/dom';
+import ViewHelper from './../utils/view';
 
 import {
-  ADD as ACTION_ADD,
-  REPLACE as ACTION_REPLACE,
+  FAVORITE_FETCH_SUCCESS,
+  FAVORITE_ADD_SUCCESS,
+  FAVORITE_REMOVE_SUCCESS,
 } from './../constants/actions';
 import {
   SEARCH_RESULTS_ID,
@@ -14,38 +16,35 @@ export default class FavoritesCtrl extends BaseCtrl {
 
   constructor() {
     super();
+    this._stores = [ FavoriteStore ];
   }
 
-  async search(query) { /* do nothing for the moment */ }
-  async loadMore()  { /* do nothing for the moment */ }
-
   unMount() {
+    FavoriteStore.getInstance().unsubscribe(this._onStoreChange);
     super.unMount();
   }
 
   render() {
-    FavoritesCtrl.hideSearchForm();
+    FavoriteStore.getInstance().subscribe(this._onStoreChange);
+    ViewHelper.hideSearchForm();
     super.render();
-    this._onStoreChange(ACTION_REPLACE);
+    this._onStoreChange(FAVORITE_FETCH_SUCCESS);
   }
 
-  _onStoreChange(action, data) {
-    const list = Store.getInstance().favorites
+  _onStoreChange(action) {
     switch (action) {
-      case ACTION_ADD:
-        FavoritesCtrl.appendToList(list.slice(
-          list.length - this._searchLimit,
-          list.length
-        ));
-        break;
-      case ACTION_REPLACE:
-        FavoritesCtrl.replaceList(list);
+      case FAVORITE_REMOVE_SUCCESS:
+      case FAVORITE_FETCH_SUCCESS: {
+        const favorites = FavoriteStore.getInstance().favorites;
+        const list = Object.values(favorites)
+        ViewHelper.replaceList(list, favorites);
         if(!list.length){
-          FavoritesCtrl.showNoResults();
+          ViewHelper.showNoResults();
         } else {
-          FavoritesCtrl.hideNoResults()
+          ViewHelper.hideNoResults()
         }
         break;
+      }
     }
   }
 }

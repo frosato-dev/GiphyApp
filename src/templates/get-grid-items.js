@@ -5,7 +5,8 @@ import getGridItem from './get-grid-item';
  *
  * @return {String} the HTML String
  */
-export default (data) => data.reduce((acc, curr) => {
-  acc += getGridItem(curr);
+export default (data, favorites) => data.reduce((acc, curr) => {
+  const isFavorite = !!favorites[curr.id];
+  acc += getGridItem(curr, isFavorite);
   return acc;
 }, '')
