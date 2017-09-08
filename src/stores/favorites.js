@@ -3,13 +3,13 @@ import Store from './base';
 import {
   FAVORITES as SK_FAVORITES,
   FAVORITES_BY_ID as SK_FAVORITES_BY_ID,
-} from './constants/storage';
+} from './../constants/storage';
 
 import {
   ADD as ACTION_ADD,
   REPLACE as ACTION_REPLACE,
   REMOVE as ACTION_REMOVE,
-} from './constants/actions';
+} from './../constants/actions';
 
 
 class FavoriteStore extends Store {
