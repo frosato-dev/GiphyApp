@@ -67,6 +67,7 @@ export default class HomeCtrl {
         ), favorites);
         ViewHelper.toggleLoadMore(HomeStore.getInstance().canLoadMore());
         ViewHelper.setResultText(list.length, pagination.total_count)
+        ViewHelper.showResultText();
         break;
       }
       case FAVORITE_REMOVE_SUCCESS: // Move to a function that get the dom element and update it
@@ -77,13 +78,17 @@ export default class HomeCtrl {
 
         ViewHelper.replaceList(list, favorites);
         ViewHelper.toggleLoadMore(HomeStore.getInstance().canLoadMore());
-        
+
         if(!list.length && HomeStore.getInstance().isDirty){
           ViewHelper.showNoResults();
         } else {
           ViewHelper.hideNoResults();
+        }
+
+        if(list.length){
           const total = HomeStore.getInstance().pagination.total_count
           ViewHelper.setResultText(list.length, total);
+          ViewHelper.showResultText();
         }
         break;
       }
