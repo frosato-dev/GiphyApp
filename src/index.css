@@ -1,5 +1,38 @@
 body {
-  margin: 0;
-  padding: 0;
-  font-family: sans-serif;
+    margin: 0;
+    padding: 0;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 12px;
+}
+
+.header {
+    background-color: #571845; /* Purple */
+    text-align: center;
+    position: relative;
+    padding: 1rem 0;
+}
+
+.header__title {
+    color: #fff;
+    font-size: 3rem;
+    font-weight: bold;
+    margin: auto;
+    padding:  0.5rem 0;
+}
+
+.header__logo {
+    width: 200px;
+}
+
+.header__nav {
+    position: absolute;
+    right: 1rem;
+    top: 1rem;
+}
+
+.header__nav-item {
+    color: #fff;
+    font-weight: bold;
+    text-transform: uppercase;
+    margin-right: .5rem;
 }
