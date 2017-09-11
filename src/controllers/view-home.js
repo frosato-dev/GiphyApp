@@ -34,7 +34,7 @@ export default class HomeCtrl {
 
   unMount() {
     this._stores.map(store => store.getInstance().unsubscribe(this._onStoreChange));
-    Dom.get(RESULT_LOAD_MORE_CLASS)[0].removeEventListener('click', () => Actions.loadMore());
+    Dom.get(RESULT_LOAD_MORE_CLASS)[0].removeEventListener('click', Actions.loadMore);
     ViewHelper.clearResultGrid();
     ViewHelper.hideResultText();
     this._searchCtlr.unMount();
@@ -43,7 +43,7 @@ export default class HomeCtrl {
 
   render() {
     this._stores.map(store => store.getInstance().subscribe(this._onStoreChange));
-    Dom.get(RESULT_LOAD_MORE_CLASS)[0].addEventListener('click', () => Actions.loadMore());
+    Dom.get(RESULT_LOAD_MORE_CLASS)[0].addEventListener('click', Actions.loadMore);
     this._onStoreChange(SEARCH_FETCH_SUCCESS);
     this._actionsCtlr.render();
     this._searchCtlr.render();

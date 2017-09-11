@@ -40,6 +40,7 @@ export default class SearchCtrl {
 
   unMount() {
     ViewHelper.hideSearchForm();
+    ViewHelper.hideLoadMore();
   }
 
   initListeners() {
