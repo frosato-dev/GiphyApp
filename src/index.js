@@ -13,6 +13,6 @@ Dom.ready()
 
     // Init Router
     Router(Routes(search), () => {
-      console.log('route has changed')
+      //console.log('route has changed')
     });
   });

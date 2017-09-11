@@ -50,7 +50,6 @@ export default class HomeCtrl {
   }
 
   _onStoreChange(action) {
-    console.log('onStoreChange', action);
     switch (action) {
       case SEARCH_FETCH_NEXT_SUCCESS:{
         const list = HomeStore.getInstance().list;
