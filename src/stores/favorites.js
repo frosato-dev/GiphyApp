@@ -18,7 +18,6 @@ class FavoriteStore extends Store {
   }
 
   addOrRemove(item) {
-    console.log('innn')
     let action;
     if(this.favorites[item.id]){
       action = FAVORITE_REMOVE_SUCCESS;

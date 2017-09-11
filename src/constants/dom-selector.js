@@ -21,3 +21,4 @@ export const SEARCH_INPUT_CLASS = '.header__form-input';
 export const NAV = '.header__nav';
 
 export const ICON_FAVORITE_CLASS = '.icon-btn__favorite';
+export const ICON_COPY_CLASS = '.icon-btn__copy';

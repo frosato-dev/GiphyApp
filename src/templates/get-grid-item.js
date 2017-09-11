@@ -15,6 +15,7 @@ export default (item, isFavorite) => {
     },
   })
   const favoriteClass = isFavorite ? 'icon-btn__favorite--active' : '';
+  const favoriteText = isFavorite ? 'Remove from favorites' : 'Add to favorites';
   return `
     <div class="grid__panel" data-id="${item.id}">
       <div class="grid__panel-content">
@@ -25,12 +26,19 @@ export default (item, isFavorite) => {
       </div>
       <div class="grid__panel-action">
         <button
+          alt="${favoriteText}"
           class="grid__panel-action-btn icon-btn icon-btn__favorite ${favoriteClass}"
           data-object='${stringifiedObject}'
         >
           &nbsp;
         </button>
-        <button class="grid__panel-action-btn icon-btn icon-btn__copy">&nbsp;</button>
+        <button
+          alt="Copy to clipboard"
+          data-clipboard-text="${bitly_url}"
+          class="grid__panel-action-btn icon-btn icon-btn__copy"
+        >
+          &nbsp;
+        </button>
       </div>
     </div>
   </div>

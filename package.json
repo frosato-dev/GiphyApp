@@ -38,6 +38,7 @@
     "webpack-dev-server": "^2.7.1"
   },
   "dependencies": {
+    "clipboard": "^1.7.1",
     "reset-css": "^2.2.1"
   }
 }

@@ -4,7 +4,7 @@ import SearchStore from './../stores/search';
 import Dom from './../utils/dom';
 import ViewHelper from './../utils/view';
 import SearchCtrl from './../controllers/search';
-import FavoriteCtrl from './../controllers/favorite';
+import ActionsCtrl from './../controllers/actions';
 import Actions from './../actions';
 
 import {
@@ -29,7 +29,7 @@ export default class HomeCtrl {
   constructor(searchValue) {
     this._stores = [ HomeStore, FavoriteStore, SearchStore ];
     this._searchCtlr = new SearchCtrl(searchValue);
-    this._favoriteCtlr = new FavoriteCtrl();
+    this._actionsCtlr = new ActionsCtrl();
   }
 
   unMount() {
@@ -38,14 +38,14 @@ export default class HomeCtrl {
     ViewHelper.clearResultGrid();
     ViewHelper.hideResultText();
     this._searchCtlr.unMount();
-    this._favoriteCtlr.unMount();
+    this._actionsCtlr.unMount();
   }
 
   render() {
     this._stores.map(store => store.getInstance().subscribe(this._onStoreChange));
     Dom.get(RESULT_LOAD_MORE_CLASS)[0].addEventListener('click', () => Actions.loadMore());
     this._onStoreChange(SEARCH_FETCH_SUCCESS);
-    this._favoriteCtlr.render();
+    this._actionsCtlr.render();
     this._searchCtlr.render();
   }
 

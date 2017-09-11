@@ -1,5 +1,5 @@
 import FavoriteStore from './../stores/favorites';
-import FavoriteCtrl from './../controllers/favorite';
+import ActionsCtrl from './../controllers/actions';
 import Dom from './../utils/dom';
 import ViewHelper from './../utils/view';
 
@@ -16,17 +16,17 @@ export default class FavoritesCtrl {
 
   constructor(searchValue) {
     this._stores = [ FavoriteStore ];
-    this._favoriteCtlr = new FavoriteCtrl();
+    this._actionsCtrl = new ActionsCtrl();
   }
 
   unMount() {
     this._stores.map(store => store.getInstance().unsubscribe(this._onStoreChange));
-    this._favoriteCtlr.unMount();
+    this._actionsCtrl.unMount();
   }
 
   render() {
     this._stores.map(store => store.getInstance().subscribe(this._onStoreChange));
-    this._favoriteCtlr.render();
+    this._actionsCtrl.render();
     this._onStoreChange(FAVORITE_FETCH_SUCCESS);
   }
 
