@@ -31,7 +31,7 @@ module.exports = (env, argv) => {
       }
     },
     plugins: [
-      new DashboardPlugin(),
+      new DashboardPlugin({ port: 8080 }),
     ],
   }, customizer);
 };

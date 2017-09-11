@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "NODE_ENV=development webpack-dev-server --env.development --config config/webpack.dev.config.js --hot --open",
+    "dev": "NODE_ENV=development webpack-dashboard -- webpack-dev-server --env.development --config config/webpack.dev.config.js --hot --open",
     "build": "NODE_ENV=production webpack --env.production --config config/webpack.prod.config.js",
     "test": "test"
   },
