@@ -19,6 +19,7 @@ async function loadMore() {
   const { pagination, lastQuery } = SearchStore.getInstance()
   const offset = pagination.offset + SEARCH_LIMIT;
   const res = await GiphyService.search(lastQuery, offset, SEARCH_LIMIT);
+  SearchStore.getInstance().receiveResults(res)
   HomeStore.getInstance().add(res);
 }
 
