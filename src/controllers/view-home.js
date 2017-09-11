@@ -1,16 +1,19 @@
 import HomeStore from './../stores/home';
 import FavoriteStore from './../stores/favorites';
-import GiphyService from './../services/giphy';
+import SearchStore from './../stores/search';
 import Dom from './../utils/dom';
 import ViewHelper from './../utils/view';
 import SearchCtrl from './../controllers/search';
+import FavoriteCtrl from './../controllers/favorite';
+import Actions from './../actions';
 
 import {
   SEARCH_FETCH_NEXT_SUCCESS,
   SEARCH_FETCH_SUCCESS,
   SEARCH_FETCH_FAILED,
   FAVORITE_REMOVE_SUCCESS,
-  FAVORITE_ADD_SUCCESS
+  FAVORITE_ADD_SUCCESS,
+  SEARCH_IS_LOADING,
 } from './../constants/actions';
 import {
   SEARCH_RESULTS_ID,
@@ -24,48 +27,41 @@ import {
 export default class HomeCtrl {
 
   constructor(searchValue) {
-    this._lastQuery = '';
-    this._service = GiphyService;
-    this._stores = [ HomeStore, FavoriteStore ];
-
+    this._stores = [ HomeStore, FavoriteStore, SearchStore ];
     this._searchCtlr = new SearchCtrl(searchValue);
-
-    if( // Run initial search if needed
-      !!searchValue &&
-      searchValue !== ''
-    ) {
-      this._searchCtlr.search(searchValue);
-    }
+    this._favoriteCtlr = new FavoriteCtrl();
   }
 
   unMount() {
-    HomeStore.getInstance().subscribe(this._onStoreChange);
-    FavoriteStore.getInstance().subscribe(this._onStoreChange);
-    Dom.get(RESULT_LOAD_MORE_CLASS)[0].removeEventListener('click', () => this._searchCtlr.loadMore());
+    this._stores.map(store => store.getInstance().unsubscribe(this._onStoreChange));
+    Dom.get(RESULT_LOAD_MORE_CLASS)[0].removeEventListener('click', () => Actions.loadMore());
     ViewHelper.clearResultGrid();
     ViewHelper.hideResultText();
+    this._searchCtlr.unMount();
+    this._favoriteCtlr.unMount();
   }
 
   render() {
-    HomeStore.getInstance().subscribe(this._onStoreChange);
-    FavoriteStore.getInstance().subscribe(this._onStoreChange);
-    ViewHelper.showSearchForm();
-    Dom.get(RESULT_LOAD_MORE_CLASS)[0].addEventListener('click', () => this._searchCtlr.loadMore());
+    this._stores.map(store => store.getInstance().subscribe(this._onStoreChange));
+    Dom.get(RESULT_LOAD_MORE_CLASS)[0].addEventListener('click', () => Actions.loadMore());
     this._onStoreChange(SEARCH_FETCH_SUCCESS);
+    this._favoriteCtlr.render();
+    this._searchCtlr.render();
   }
 
   _onStoreChange(action) {
+    console.log('onStoreChange', action);
     switch (action) {
       case SEARCH_FETCH_NEXT_SUCCESS:{
-        const list = HomeStore.getInstance().home;
-        const pagination = HomeStore.getInstance().pagination;
+        const list = HomeStore.getInstance().list;
+        const pagination = SearchStore.getInstance().pagination;
         const favorites = FavoriteStore.getInstance().favorites;
 
         ViewHelper.appendToList(list.slice(
           list.length - SEARCH_LIMIT,
           list.length
         ), favorites);
-        ViewHelper.toggleLoadMore(HomeStore.getInstance().canLoadMore());
+        ViewHelper.toggleLoadMore(SearchStore.getInstance().canLoadMore());
         ViewHelper.setResultText(list.length, pagination.total_count)
         ViewHelper.showResultText();
         break;
@@ -73,24 +69,29 @@ export default class HomeCtrl {
       case FAVORITE_REMOVE_SUCCESS: // Move to a function that get the dom element and update it
       case FAVORITE_ADD_SUCCESS: // same as above
       case SEARCH_FETCH_SUCCESS: {
-        const list = HomeStore.getInstance().home;
+
+        const list = HomeStore.getInstance().list;
         const favorites = FavoriteStore.getInstance().favorites;
 
         ViewHelper.replaceList(list, favorites);
-        ViewHelper.toggleLoadMore(HomeStore.getInstance().canLoadMore());
+        ViewHelper.toggleLoadMore(SearchStore.getInstance().canLoadMore());
 
-        if(!list.length && HomeStore.getInstance().isDirty){
+        if(!list.length && SearchStore.getInstance().isDirty){
           ViewHelper.showNoResults();
         } else {
           ViewHelper.hideNoResults();
         }
 
         if(list.length){
-          const total = HomeStore.getInstance().pagination.total_count
+          const total = SearchStore.getInstance().pagination.total_count
           ViewHelper.setResultText(list.length, total);
           ViewHelper.showResultText();
         }
         break;
+      }
+      case SEARCH_IS_LOADING: {
+        ViewHelper.hideNoResults();
+        ViewHelper.showLoading();
       }
     }
   }

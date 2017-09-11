@@ -39,6 +39,24 @@ export const getRoute = (routes) => (path) => {
   }, routes[defaultKey]);
 }
 
+export const setQueryInUrl = (query) => {
+  const url = new URL(window.location)
+
+  // "w.history.pushState" avoid page reload on query change
+  // "w.location.search = `q=${query}`;" triggers a reload
+  let nextUrl = url.origin;
+  if(query.length) {
+    nextUrl += `?q=${query}`;
+  }
+  if( nextUrl != window.location){
+    window.history.pushState({
+      path:nextUrl},
+      '',
+      nextUrl
+    );
+  }
+}
+
 /**
  * onHashChange - /!\ is getting messy because of Dom action
  *

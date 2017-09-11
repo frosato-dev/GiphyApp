@@ -1,4 +1,5 @@
 import Dom from './../utils/dom';
+import Actions from './../actions';
 
 import {
   ICON_FAVORITE_CLASS,
@@ -21,7 +22,7 @@ export default class FavoriteCtrl {
   toggleFavorites(e) {
     if (Dom.hasClass(e.target, ICON_FAVORITE_CLASS)) {
        const item = JSON.parse(e.target.dataset.object);
-       FavoriteStore.getInstance().addOrRemove(item);
+       Actions.toggleFavorite(item);
     }
   }
 }

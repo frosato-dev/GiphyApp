@@ -2,9 +2,7 @@ import Store from './base';
 
 import {
   SEARCH_FETCH_NEXT_SUCCESS,
-  SEARCH_FETCH,
   SEARCH_FETCH_SUCCESS,
-  SEARCH_FETCH_FAILED,
 } from './../constants/actions';
 import {
   RESULT_LOAD_MORE_CLASS,
@@ -14,35 +12,21 @@ class HomeStore extends Store {
 
   constructor() {
     super();
-    this.home = [];
-    this.isDirty = false;
-    this.pagination = {
-      count: 0,
-      offset: 0,
-      total_count: 0
-    };
-  }
-
-  canLoadMore() {
-    return this.pagination.total_count > this.pagination.count;
+    this.list = [];
   }
 
   add(response) {
-    this.isDirty = true;
-    this.home = this.home.concat(response.data);
-    this.pagination = response.pagination;
+    this.list = this.list.concat(response.data);
     this.onChange(SEARCH_FETCH_NEXT_SUCCESS);
   }
 
   replace(response) {
-    this.isDirty = true;
-    this.home = [].concat(response.data);
-    this.pagination = response.pagination;
+    this.list = [].concat(response.data);
     this.onChange(SEARCH_FETCH_SUCCESS);
   }
 
   flush() {
-    this.home = [];
+    this.list = [];
     this.onChange();
   }
 }

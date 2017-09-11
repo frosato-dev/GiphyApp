@@ -1,7 +1,7 @@
 import Dom from './../utils/dom';
-import HomeStore from './../stores/home';
-import GiphyService from './../services/giphy';
 import ViewHelper from './../utils/view';
+import Actions from './../actions';
+import { setQueryInUrl } from './../utils/router';
 
 import {
   SEARCH_FORM_CLASS,
@@ -21,7 +21,6 @@ export default class SearchCtrl {
     this._searchClear = Dom.get(SEARCH_FORM_CLEAR_CLASS)[0];
 
     this._searchInput.value = searchValue;
-    this._lastQuery = '';
 
     this.initListeners();
 
@@ -30,43 +29,17 @@ export default class SearchCtrl {
       !!this._searchInput.value &&
       this._searchInput.value !== ''
     ) {
+      Actions.search(searchValue);
       ViewHelper.showInputFormClear();
     }
   }
 
-  async search(query) {
-    ViewHelper.hideNoResults();
-    ViewHelper.showLoading();
-    this._lastQuery = query;
-    const offset = 0;
-    const res = await GiphyService.search(query, offset, SEARCH_LIMIT);
-    HomeStore.getInstance().replace(res);
+  render() {
+    ViewHelper.showSearchForm();
   }
 
-  async loadMore() {
-    ViewHelper.showLoading();
-    const offset = HomeStore.getInstance().pagination.offset + SEARCH_LIMIT;
-    const res = await GiphyService.search(this._lastQuery, offset, SEARCH_LIMIT);
-    HomeStore.getInstance().add(res);
-  }
-
-  // @TODO move into router
-  _setQueryInUrl(query) { // Side effect :(
-    const url = new URL(window.location)
-
-    // "w.history.pushState" avoid page reload on query change
-    // "w.location.search = `q=${query}`;" triggers a reload
-    let nextUrl = url.origin;
-    if(query.length) {
-      nextUrl += `?q=${query}`;
-    }
-    if( nextUrl != window.location){
-      window.history.pushState({
-        path:nextUrl},
-        '',
-        nextUrl
-      );
-    }
+  unMount() {
+    ViewHelper.hideSearchForm();
   }
 
   initListeners() {
@@ -74,7 +47,7 @@ export default class SearchCtrl {
     this._searchClear.addEventListener('click', (e) => {
       this._searchInput.value = '';
       ViewHelper.hideInputFormClear();
-      this._setQueryInUrl('');
+      setQueryInUrl('');
     });
 
     this._searchInput.addEventListener('input', (e) => {
@@ -90,8 +63,8 @@ export default class SearchCtrl {
       e.preventDefault();
       const query = this._searchInput.value;
       if(query.length) {
-        this._setQueryInUrl(query);
-        this.search(query)
+        setQueryInUrl(query);
+        Actions.search(query)
       }
     }
   }
