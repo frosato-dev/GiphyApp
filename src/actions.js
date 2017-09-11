@@ -16,8 +16,9 @@ async function search(query) {
 
 async function loadMore() {
   SearchStore.getInstance().setLoadingState(true, false);
-  const offset = HomeStore.getInstance().pagination.offset + SEARCH_LIMIT;
-  const res = await GiphyService.search(SearchStore.getInstance().lastQuery, offset, SEARCH_LIMIT);
+  const { pagination, lastQuery } = SearchStore.getInstance()
+  const offset = pagination.offset + SEARCH_LIMIT;
+  const res = await GiphyService.search(lastQuery, offset, SEARCH_LIMIT);
   HomeStore.getInstance().add(res);
 }
 

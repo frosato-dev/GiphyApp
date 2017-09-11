@@ -78,6 +78,7 @@ export default class HomeCtrl {
 
         if(!list.length && SearchStore.getInstance().isDirty){
           ViewHelper.showNoResults();
+          ViewHelper.hideResultText();
         } else {
           ViewHelper.hideNoResults();
         }
