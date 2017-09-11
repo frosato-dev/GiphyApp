@@ -1,28 +1,46 @@
-import React from 'react'
-import { push } from 'react-router-redux'
+import React, { Component } from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import Search from './../components/Search';
+import { fetch as search } from './../actions/search';
+import Grid from './../components/GifGrid';
 
-const Home = props => (
-    <div>
-        <Search onSubmit={() => { console.log('in'); } } />
-        <h1>Home</h1>
-        <p>Welcome home!</p>
-        <button onClick={() => props.changePage()}>Go to about page via redux</button>
+class Home extends Component {
 
-    </div>
-)
+  search = (values) => {
+    this.props.search(values.query);
+  }
+
+  render() {
+    const { list , listById } = this.props;
+    return (
+      <div>
+        <Search onSubmit={this.search} />
+        <Grid
+          list={list}
+          listById={listById}
+          emptyMessage={"The list is empty"}
+        />
+      </div>
+    )
+  }
+}
+
 
 const mapDispatchToProps = dispatch => bindActionCreators({
-    changePage: () => push('/favorites')
-}, dispatch)
+  search,
+}, dispatch);
 
-const mapStateToProps = dispatch => bindActionCreators({
-
-}, dispatch)
+const mapStateToProps = state => ({
+  listById: state.search.listById,
+  list: state.search.list,
+  count: 10,
+  total: 1000,
+  search: 'query',
+  isLoading: false,
+});
 
 export default connect(
     mapStateToProps,
     mapDispatchToProps
-)(Home)
+)(Home);

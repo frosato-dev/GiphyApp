@@ -10,7 +10,7 @@ let SearchForm = props => {
       <form className="search-form" onSubmit={ handleSubmit }>
         <Field
           className="search-form__input input"
-          name="firstName"
+          name="query"
           component="input"
           type="text"
           placeholder="Type something here"
