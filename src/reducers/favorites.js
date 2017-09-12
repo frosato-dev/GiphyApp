@@ -1,38 +1,41 @@
-import { Map } from 'immutable';
-
 import {
-  FETCH_FAVORITE_SUCCESS,
   ADD_FAVORITE_SUCCESS,
   REMOVE_FAVORITE_SUCCESS
 } from './../constants/actions';
 
-const initialState = {
-  list: new Map(),
+const _initialState = {
+  list: [],
+  listById: {},
 };
+
+const STORAGE_KEY = 'FAVORITES';
+const localStorageData = localStorage.getItem(STORAGE_KEY);
+const initialState = JSON.parse(localStorageData) || _initialState;
+
 
 export default (state = initialState, action) => {
   switch (action.type) {
-    case FETCH_FAVORITE_SUCCESS:
-      const items = action.payload;
-      return {
-        ...state,
-        list: new Map(items),
-      }
-    case ADD_FAVORITE_SUCCESS:
+    case ADD_FAVORITE_SUCCESS: {
       const item = action.payload;
-      return {
+      const _state = {
         ...state,
-        list: state.list.set(item.id, item),
-      }
-
-    case REMOVE_FAVORITE_SUCCESS:
-      const id = action.payload;
-      return {
+        listById: {...state.listById, [item.id]: Object.assign({}, item)},
+        list: [item.id].concat(state.list),
+      };
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(_state));
+      return _state;
+    }
+    case REMOVE_FAVORITE_SUCCESS: {
+      const item = action.payload;
+      const _state = {
         ...state,
-        list: state.list.delete(id),
-      }
-
+        listById: Object.assign({}, state.listById).delete(item.id),
+        list: state.list.filter(item => item !== item.id),
+      };
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(_state));
+      return _state;
+    }
     default:
-      return state
+      return state;
   }
 }

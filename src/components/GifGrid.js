@@ -1,5 +1,6 @@
 import React, { PureComponent } from 'react';
 import GifItem from './GifItem';
+import GifActions from './../containers/GifActions';
 import './GifGrid.css';
 
 export default class GifGrid extends PureComponent {
@@ -11,13 +12,13 @@ export default class GifGrid extends PureComponent {
         <div className="results__loader"></div>
       </div>
     </section>
-  )
+  );
 
   renderEmpty = (emptyMessage) => (
     <div className="results__empty">
       {emptyMessage}
     </div>
-  )
+  );
 
   render() {
     const {
@@ -28,28 +29,28 @@ export default class GifGrid extends PureComponent {
       emptyMessage,
     } = this.props;
 
+    if(isLoading)
+      return this.renderLoading();
+
+
+    if(!list.length)
+      return this.renderEmpty(emptyMessage);
 
     const items = list.map(id => (
       <GifItem
         key={id}
         gif={listById[id]}
-        isFavorite={true}
-      />
+      >
+        <GifActions gif={listById[id]} />
+      </GifItem>
     ));
-
-    if(isLoading)
-      return this.renderLoading();
-
-    if(!list.length)
-      return this.renderEmpty(emptyMessage);
 
     return (
       <section className="results">
         { children }
         <div className="results__grid grid">
-          {items}
+          { items }
         </div>
-
       </section>
     );
   }

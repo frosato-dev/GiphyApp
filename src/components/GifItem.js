@@ -1,24 +1,20 @@
 import React, { PureComponent } from 'react';
-import GifActions from './GifAction';
 
 export default class GifGrid extends PureComponent {
 
   render() {
-    const { gif, isFavorite } = this.props;
-
+    const { gif, children } = this.props;
+    console.log(gif)
     return (
-      <div className="grid__panel" data-id={gif.id}>
+      <div className="grid__panel">
         <div className="grid__panel-content">
           <img
-            alt="todo"
+            alt="decorative"
             className="grid__panel-image"
             src={gif.images.downsized.url}
           />
         </div>
-        <GifActions
-          isFavorite={isFavorite}
-          url={gif.bitly_url}
-        />
+        { children }
       </div>
     );
   }
