@@ -8,6 +8,7 @@ import Favorites from './Favorites';
 import NoMatch from './../components/404';
 
 export default class App extends Component {
+
   render() {
     return (
       <div>

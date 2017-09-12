@@ -28,6 +28,7 @@ export default class GifGrid extends PureComponent {
       search,
       isLoading,
       emptyMessage,
+      onLoadMoreClick
     } = this.props;
 
 
@@ -47,15 +48,20 @@ export default class GifGrid extends PureComponent {
 
     return (
       <section className="results">
-        <div className="results__count results__count--hidden">
+        <div className="results__count">
           Viewing <span>{count}</span> on <span>{total}</span> for search: <span>{search}</span>
         </div>
         <div className="results__grid grid">
           {items}
         </div>
-        <button className="results__more results__more--hidden">
-          Load More
-        </button>
+        { (isLoading || count === total) ? false :
+          <button
+            className="results__more"
+            onClick={onLoadMoreClick}
+          >
+            Load More
+          </button>
+        }
       </section>
     );
   }

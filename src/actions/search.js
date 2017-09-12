@@ -24,7 +24,14 @@ export const fetch = (dispatch) => (query, offset = 0, limit = 25) => {
     [CALL_API]: {
       types: [
         SEARCH_REQUEST,
-        SEARCH_REQUEST_SUCCESS,
+        {
+          type: SEARCH_REQUEST_SUCCESS,
+          meta: {
+            query,
+            offset,
+            limit,
+          }
+        },
         SEARCH_REQUEST_FAILURE
       ],
       endpoint: `${BASE_URL}/v1/gifs/search?${queryString.stringify({
@@ -35,6 +42,7 @@ export const fetch = (dispatch) => (query, offset = 0, limit = 25) => {
         fmt: FORMAT,
       })}`,
       method: 'GET',
+
     }
   })
 }

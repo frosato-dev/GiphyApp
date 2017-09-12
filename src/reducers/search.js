@@ -30,11 +30,26 @@ export default (state = initialState, action) => {
       };
     case SEARCH_REQUEST_SUCCESS:
       const data = normalize(action.payload.data, gifSchema);
+
+      // Replace
+      if(action.meta.query !== state.query) {
+        return {
+          ...state,
+          query: action.meta.query,
+          pagination: action.payload.pagination,//new Map(pagination),
+          listById: data.entities[KEY],
+          list: data.result,
+          isLoading: false
+        }
+      }
+
+      // Append
       return {
         ...state,
+        query: action.meta.query,
         pagination: action.payload.pagination,//new Map(pagination),
-        listById: data.entities[KEY],
-        list: data.result,
+        listById: Object.assign({}, state.listById, data.entities[KEY]),
+        list: [].concat(state.list, data.result),
         isLoading: false,
       };
 

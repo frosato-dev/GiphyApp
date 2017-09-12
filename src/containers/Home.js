@@ -14,6 +14,11 @@ class Home extends Component {
     this.props.search(values.query);
   };
 
+  loadMore = () => {
+    const { query, list } = this.props;
+    this.props.search(query, list.length);
+  }
+
   render() {
     const {
       list ,
@@ -35,6 +40,7 @@ class Home extends Component {
           count={count}
           search={query}
           isLoading={isLoading}
+          onLoadMoreClick={this.loadMore}
         />
       </div>
     )
