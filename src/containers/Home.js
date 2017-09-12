@@ -7,8 +7,17 @@ import { fetch as search } from './../actions/search';
 import Grid from './../components/GifGrid';
 import { FORM_NAME as SEARCH_FORM } from './../components/Search';
 
+export const getUrlParam = (url, key) => new URL(url).searchParams.get(key);
 
 class Home extends Component {
+
+  componentWillMount() {
+    const query = getUrlParam(window.location, 'q');
+    if(query) {
+      console.log(query);
+      this.props.search(query)
+    }
+  }
 
   search = (values) => {
     this.props.search(values.query);
