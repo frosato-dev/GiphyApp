@@ -1,0 +1,19 @@
+.not-found {
+  margin: 4rem 0;
+  text-align: center;
+}
+
+.not-found__title {
+  font-size: 2rem;
+  color: #353535; /* DarkPurple */
+  margin-bottom: 0;
+}
+
+.not-found__subtitle {
+  margin-top: .5rem;
+  font-size: 1rem;
+  color: #6B6B6B; /*Grey*/
+  font-weight: normal;
+}
+
+

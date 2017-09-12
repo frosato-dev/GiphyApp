@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
-import { Route, NavLink, Redirect } from 'react-router-dom'
+import { Route, NavLink, Switch } from 'react-router-dom'
 
 import logo from '../assets/img/giphy.gif';
 
 import Home from './Home';
 import Favorites from './Favorites';
+import NoMatch from './../components/404';
 
 export default class App extends Component {
   render() {
@@ -39,9 +40,11 @@ export default class App extends Component {
           </nav>
         </header>
         <main>
-          <Redirect from="*" to="/" />
-          <Route exact path="/" component={Home} />
-          <Route exact path="/favorites" component={Favorites} />
+          <Switch>
+            <Route exact path="/" component={Home} />
+            <Route exact path="/favorites" component={Favorites} />
+            <Route component={NoMatch}/>
+          </Switch>
         </main>
       </div>
     );
