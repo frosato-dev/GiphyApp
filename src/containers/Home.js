@@ -25,7 +25,11 @@ class Home extends Component {
   loadMore = () => {
     const { query, list } = this.props;
     this.props.search(query, list.length);
-  }
+  };
+
+  canLoadMore = (count, total) => {
+    return count < total;
+  };
 
   render() {
     const {
@@ -44,12 +48,20 @@ class Home extends Component {
           list={list}
           listById={listById}
           emptyMessage={"Result list is empty"}
-          total={total}
-          count={count}
-          search={query}
           isLoading={isLoading}
-          onLoadMoreClick={this.loadMore}
-        />
+        >
+          <div className="results__count">
+            Viewing <span>{count}</span> on <span>{total}</span> for search: <span>{search}</span>
+          </div>
+          { (isLoading || !this.canLoadMore(count, total)) ? false :
+            <button
+              className="results__more"
+              onClick={this.loadMore}
+            >
+              Load More
+            </button>
+          }
+        </Grid>
       </div>
     )
   }
