@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
-import { formValueSelector } from 'redux-form';
 import { fetch as search } from './../actions/search';
 import {
   add as addFavorite,
@@ -17,8 +16,6 @@ import ActionFavorite from './../components/Actions/favorite';
 import LoadMore from './../components/LoadMore';
 import SearchResultsText from './../components/SearchResultsText';
 import Loading from './../components/Loading';
-
-import { FORM_NAME as SEARCH_FORM } from './../components/Search';
 
 export const getUrlParam = (url, key) => new URL(url).searchParams.get(key);
 
@@ -61,7 +58,6 @@ class Home extends Component {
       isLoading,
     } = this.props;
 
-      console.log(list.length)
     return (
       <div>
         <SearchBar onSubmit={this.search} initialValues={{ query }}/>
@@ -107,14 +103,12 @@ const mapDispatchToProps = dispatch => bindActionCreators({
   removeFavorite,
 }, dispatch);
 
-const searchFormSelector = formValueSelector(SEARCH_FORM);
-
 const mapStateToProps = state => ({
   listById: state.search.listById,
   list: state.search.list,
   count: state.search.list.length,
   total: state.search.pagination.total_count,
-  query: getUrlParam(window.location, 'q') || searchFormSelector(state, 'query'),
+  query: getUrlParam(window.location, 'q') || state.search.query,
   isLoading: state.search.isLoading,
   favoritesById: state.favorites.listById,
 });
