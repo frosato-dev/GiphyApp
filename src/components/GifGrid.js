@@ -6,16 +6,16 @@ export default class GifGrid extends PureComponent {
 
   renderLoading = () => (
     <section className="results">
-      <div className="results__loading results__loading--hidden">
+      <div className="results__loading">
         <p>Please wait while loading</p>
         <div className="results__loader"></div>
       </div>
     </section>
   )
 
-  renderEmpty = () => (
-    <div className="results__empty results__empty--hidden">
-      No results...
+  renderEmpty = (emptyMessage) => (
+    <div className="results__empty">
+      {emptyMessage}
     </div>
   )
 
@@ -26,7 +26,8 @@ export default class GifGrid extends PureComponent {
       count,
       total,
       search,
-      isLoadding,
+      isLoading,
+      emptyMessage,
     } = this.props;
 
 
@@ -38,16 +39,16 @@ export default class GifGrid extends PureComponent {
       />
     ));
 
-    if(isLoadding)
+    if(isLoading)
       return this.renderLoading();
 
     if(!list.length)
-      return this.renderEmpty();
+      return this.renderEmpty(emptyMessage);
 
     return (
       <section className="results">
         <div className="results__count results__count--hidden">
-          Viewing <span>{count}</span> {items.length} on <span>{total}</span> for search: <span>{search}</span>
+          Viewing <span>{count}</span> on <span>{total}</span> for search: <span>{search}</span>
         </div>
         <div className="results__grid grid">
           {items}

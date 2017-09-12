@@ -1,8 +1,10 @@
-export const FETCH_FAVORITE_SUCCESS = 'FETCH_FAVORITE_SUCCESS';
-export const ADD_FAVORITE_SUCCESS = 'ADD_FAVORITE_SUCCESS';
-export const REMOVE_FAVORITE_SUCCESS = 'REMOVE_FAVORITE_SUCCESS';
-
 import { Map } from 'immutable';
+
+import {
+  FETCH_FAVORITE_SUCCESS,
+  ADD_FAVORITE_SUCCESS,
+  REMOVE_FAVORITE_SUCCESS
+} from './../constants/actions';
 
 const initialState = {
   list: new Map(),

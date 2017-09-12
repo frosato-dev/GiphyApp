@@ -49,8 +49,3 @@
   right: .75rem;
   top: .75rem;
 }
-
-.search-form--hidden,
-.search-form__clear--hidden {
-  display: none;
-}

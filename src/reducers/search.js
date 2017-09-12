@@ -9,7 +9,9 @@ import {
 const initialState = {
   query: '',
   results: '',
-  pagination: null,
+  pagination: {
+    total_count: 0,
+  },
   list: [],
   listById: {},
   isLoading: false,

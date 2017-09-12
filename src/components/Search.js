@@ -2,6 +2,8 @@ import React from 'react'
 import { Field, reduxForm } from 'redux-form'
 import './Search.css';
 
+export const FORM_NAME = 'search';
+
 let SearchForm = props => {
   const { handleSubmit, reset, dirty } = props
 
@@ -19,17 +21,19 @@ let SearchForm = props => {
           type="submit"
           className="search-form__submit search-form__button search-form_button--disabled"
         />
-        <div
-          className={`search-form__clear search-form__button ${dirty || "search-form__clear--hidden"}`}
-          onClick={reset}
-        />
+        { !dirty ? false :
+          <div
+            className="search-form__clear search-form__button"
+            onClick={reset}
+          />
+        }
       </form>
     </div>
   )
 }
 
 SearchForm = reduxForm({
-  form: 'search'
+  form: FORM_NAME,
 })(SearchForm)
 
 export default SearchForm;

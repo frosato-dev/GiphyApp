@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { Route, Link } from 'react-router-dom'
 
 import logo from '../assets/img/giphy.gif';
-import './App.css';
 
 import Home from './Home';
 import Favorites from './Favorites';
