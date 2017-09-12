@@ -7,11 +7,12 @@ import { fetch as search } from './../actions/search';
 import Grid from './../components/GifGrid';
 import { FORM_NAME as SEARCH_FORM } from './../components/Search';
 
+
 class Home extends Component {
 
   search = (values) => {
     this.props.search(values.query);
-  }
+  };
 
   render() {
     const {
@@ -42,7 +43,7 @@ class Home extends Component {
 
 
 const mapDispatchToProps = dispatch => bindActionCreators({
-  search,
+  search: search(dispatch),
 }, dispatch);
 
 const searchFormSelector = formValueSelector(SEARCH_FORM)
