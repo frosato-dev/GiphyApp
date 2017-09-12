@@ -27,9 +27,11 @@ export default (state = initialState, action) => {
     }
     case REMOVE_FAVORITE_SUCCESS: {
       const item = action.payload;
+      let listById = Object.assign({}, state.listById);
+      delete listById[item.id];
       const _state = {
         ...state,
-        listById: Object.assign({}, state.listById).delete(item.id),
+        listById,
         list: state.list.filter(item => item !== item.id),
       };
       console.log(_state)
