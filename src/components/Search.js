@@ -1,11 +1,12 @@
 import React from 'react'
-import { Field, reduxForm } from 'redux-form'
+import { connect } from 'react-redux'
+import { Field, reduxForm, formValueSelector } from 'redux-form'
 import './Search.css';
 
 export const FORM_NAME = 'search';
 
 let SearchForm = props => {
-  const { handleSubmit, reset, dirty } = props
+  const { handleSubmit, change, query } = props
 
   return (
     <div className="search">
@@ -21,10 +22,10 @@ let SearchForm = props => {
           type="submit"
           className="search-form__submit search-form__button search-form_button--disabled"
         />
-        { !dirty ? false :
+        { !query ? false :
           <div
             className="search-form__clear search-form__button"
-            onClick={reset}
+            onClick={change.bind(this, 'query', '')}
           />
         }
       </form>
@@ -34,6 +35,14 @@ let SearchForm = props => {
 
 SearchForm = reduxForm({
   form: FORM_NAME,
+})(SearchForm);
+
+const selector = formValueSelector(FORM_NAME) //
+SearchForm = connect(state => {
+  const query = selector(state, 'query')
+  return {
+    query,
+  }
 })(SearchForm)
 
 export default SearchForm;

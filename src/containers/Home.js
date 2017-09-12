@@ -12,10 +12,9 @@ export const getUrlParam = (url, key) => new URL(url).searchParams.get(key);
 class Home extends Component {
 
   componentWillMount() {
-    const query = getUrlParam(window.location, 'q');
-    if(query) {
-      console.log(query);
-      this.props.search(query)
+    const { query } = this.props;
+    if(query && query.length) {
+      this.props.search(query);
     }
   }
 
@@ -40,7 +39,7 @@ class Home extends Component {
 
     return (
       <div>
-        <Search onSubmit={this.search} />
+        <Search onSubmit={this.search} initialValues={{ query }}/>
         <Grid
           list={list}
           listById={listById}
@@ -61,14 +60,14 @@ const mapDispatchToProps = dispatch => bindActionCreators({
   search: search(dispatch),
 }, dispatch);
 
-const searchFormSelector = formValueSelector(SEARCH_FORM)
+const searchFormSelector = formValueSelector(SEARCH_FORM);
 
 const mapStateToProps = state => ({
   listById: state.search.listById,
   list: state.search.list,
   count: state.search.list.length,
   total: state.search.pagination.total_count,
-  query: searchFormSelector(state, 'query'),
+  query: getUrlParam(window.location, 'q') || searchFormSelector(state, 'query'),
   isLoading: false,
 });
 
