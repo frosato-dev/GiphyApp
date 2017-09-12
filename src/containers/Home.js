@@ -81,7 +81,7 @@ class Home extends Component {
                       isFavorite={!!favoritesById[id]}
                       action={this.toggleFavorite(id)}
                     />
-                    <ActionCopy />
+                    <ActionCopy text={listById[id].bitly_url}/>
                   </GifActions>
                 </Gif>
               ))

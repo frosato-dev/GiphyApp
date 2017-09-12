@@ -1,4 +1,5 @@
 import React, { PureComponent } from 'react';
+import './Gif.css';
 
 export default class Gif extends PureComponent {
 

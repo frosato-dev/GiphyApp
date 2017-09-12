@@ -40,7 +40,7 @@ class Favorites extends Component {
                       isFavorite={true}
                       action={this.removeFavorite(id)}
                     />
-                    <ActionCopy />
+                    <ActionCopy text={listById[id].bitly_url}/>
                   </GifActions>
                 </Gif>
               ))

@@ -1,5 +1,4 @@
 import React, { PureComponent } from 'react';
-import './Gif.css';
 
 export default class Grid extends PureComponent {
 
