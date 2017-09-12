@@ -4,7 +4,6 @@ export default class GifGrid extends PureComponent {
 
   render() {
     const { gif, children } = this.props;
-    console.log(gif)
     return (
       <div className="grid__panel">
         <div className="grid__panel-content">

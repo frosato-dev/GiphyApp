@@ -6,8 +6,13 @@ import { add, remove } from './../actions/favorite';
 class GridActions extends PureComponent {
 
   toggleFavorite = () => {
-    const { toggle, id } = this.props;
-    toggle(id);
+    const { id, isFavorite } = this.props;
+    console.log('in', isFavorite)
+    if(isFavorite){
+      console.log('remove', id)
+      return remove(id);
+    }
+    return add(id);
   };
 
   render() {
@@ -33,13 +38,14 @@ class GridActions extends PureComponent {
 }
 
 const mapDispatchToProps = (dispatch, props) => bindActionCreators({
-  toggle: props.isFavorite ? remove : add,
+  remove: remove(dispatch),
+  add: add(dispatch),
 }, dispatch);
 
 
 const mapStateToProps = (state, props) => {
   const { id, url } = props.gif;
-  const isFavorite = state.favorites.listById[id];
+  const isFavorite = !!state.favorites.listById[id];
   return ({
     favoriteText: isFavorite ? 'Remove from favorites' : 'Add to favorites',
     isFavorite,

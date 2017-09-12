@@ -32,6 +32,7 @@ export default (state = initialState, action) => {
         listById: Object.assign({}, state.listById).delete(item.id),
         list: state.list.filter(item => item !== item.id),
       };
+      console.log(_state)
       localStorage.setItem(STORAGE_KEY, JSON.stringify(_state));
       return _state;
     }
