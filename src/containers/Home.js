@@ -17,6 +17,7 @@ import SearchResultsText from './../components/SearchResultsText';
 import Loader from '../components/Loader';
 import AffixHOC from '../components/Affix';
 
+let loadingMorePending;
 const AffixSearchResultText = AffixHOC(SearchResultsText);
 
 class Home extends Component {
@@ -26,7 +27,7 @@ class Home extends Component {
     if(query && query.length) {
       this.props.search(query);
     }
-  }
+  };
 
   search = (values) => {
     this.props.search(values.query);
@@ -34,10 +35,14 @@ class Home extends Component {
 
   loadMore = () => {
     const { isLoading, query, list } = this.props;
-    if(!isLoading) {
-      setTimeout(() => this.props.search(query, list.length), 1500);
+    if(!isLoading && !loadingMorePending) {
+      loadingMorePending = setTimeout(() => { // Dirty shit to fix
+        this.props.search(query, list.length)
+        clearTimeout(loadingMorePending);
+        loadingMorePending = false;
+      }, 1500)
     }
-  }
+  };
 
   toggleFavorite = (id) => () => {
     const favorite = this.props.favoritesById[id];
@@ -60,9 +65,7 @@ class Home extends Component {
       isLoading,
     } = this.props;
 
-    /*
 
-     */
     return (
       <div>
         <SearchBar onSubmit={this.search} initialValues={{ query }}/>

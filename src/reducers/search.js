@@ -38,7 +38,7 @@ export default (state = initialState, action) => {
         return {
           ...state,
           query: action.meta.query,
-          pagination: action.payload.pagination,//new Map(pagination),
+          pagination: action.payload.pagination,
           listById: data.entities[KEY],
           list: data.result,
           isLoading: false
@@ -49,7 +49,7 @@ export default (state = initialState, action) => {
       return {
         ...state,
         query: action.meta.query,
-        pagination: action.payload.pagination,//new Map(pagination),
+        pagination: action.payload.pagination,
         listById: Object.assign({}, state.listById, data.entities[KEY]),
         list: [].concat(state.list, data.result),
         isLoading: false,
