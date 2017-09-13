@@ -1,13 +1,15 @@
 import React, { PureComponent } from 'react';
-import Masonry from 'react-masonry-infinite';
+import InfiniteScroll from 'react-infinite-scroller';
 import Loader from './Loader';
 import './Grid.css';
 
+/*
 const size = [
   { columns: 1, gutter: 20 },
   { mq: '768px', columns: 2, gutter: 20 },
   { mq: '1024px', columns: 3, gutter: 20 }
 ];
+*/
 
 export default class Grid extends PureComponent {
 
@@ -41,16 +43,17 @@ export default class Grid extends PureComponent {
       return this.renderEmpty(emptyMessage);
 
     return (
-      <Masonry
-        className="grid"
+      <InfiniteScroll
+
         hasMore={hasMore}
         loadMore={loadMore}
-        size={size}
         loader={loader}
-        threshold={10}
+        threshold={0}
       >
-        {children}
-      </Masonry>
+        <div className="grid">
+          {children}
+        </div>
+      </InfiniteScroll>
     );
   }
 }

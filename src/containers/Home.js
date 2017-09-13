@@ -15,8 +15,9 @@ import ActionCopy from './../components/Actions/copy';
 import ActionFavorite from './../components/Actions/favorite';
 import SearchResultsText from './../components/SearchResultsText';
 import Loader from '../components/Loader';
+import AffixHOC from '../components/Affix';
 
-export const getUrlParam = (url, key) => new URL(url).searchParams.get(key);
+const AffixSearchResultText = AffixHOC(SearchResultsText);
 
 class Home extends Component {
 
@@ -34,7 +35,7 @@ class Home extends Component {
   loadMore = () => {
     const { isLoading, query, list } = this.props;
     if(!isLoading) {
-      this.props.search(query, list.length);
+      setTimeout(() => this.props.search(query, list.length), 1500);
     }
   }
 
@@ -59,11 +60,17 @@ class Home extends Component {
       isLoading,
     } = this.props;
 
+    /*
+
+     */
     return (
       <div>
         <SearchBar onSubmit={this.search} initialValues={{ query }}/>
         <section className="results">
-          <SearchResultsText
+          <AffixSearchResultText
+            viewportOffsetTop={0}
+            container={this}
+            affixClassName={"search-result-text--affix"}
             count={count}
             total={total}
             search={query}

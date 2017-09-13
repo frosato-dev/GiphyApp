@@ -16,13 +16,17 @@ export default class Gif extends PureComponent {
     const { image, children } = this.props;
     const imageHeight = this.getHeight(image);
     const wrapperStyle = {
+      /*
       height: imageHeight + ACTIONS_HEIGHT + 'px',
       width: WIDTH
+      */
     };
 
     const imageStyle = {
+      /*
       height: imageHeight,
       width: WIDTH,
+      */
     };
 
     return (

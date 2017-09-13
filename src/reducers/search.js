@@ -6,8 +6,10 @@ import {
   SEARCH_REQUEST_FAILURE,
 } from './../constants/actions';
 
+export const getUrlParam = (url, key) => new URL(url).searchParams.get(key);
+
 const initialState = {
-  query: '',
+  query: getUrlParam(window.location, 'q'),
   results: '',
   pagination: {
     total_count: 0,
