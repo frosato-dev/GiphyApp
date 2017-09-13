@@ -47,7 +47,7 @@ export default class Grid extends PureComponent {
         loadMore={loadMore}
         size={size}
         loader={loader}
-        threshold={200}
+        threshold={10}
       >
         {children}
       </Masonry>

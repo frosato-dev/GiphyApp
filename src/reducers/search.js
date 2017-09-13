@@ -24,13 +24,11 @@ const gifSchema = new schema.Array(gif);
 export default (state = initialState, action) => {
   switch (action.type) {
     case SEARCH_REQUEST:
-      //console.log(action.type)
       return {
         ...state,
         isLoading: true,
       };
     case SEARCH_REQUEST_SUCCESS:
-      //console.log(action.type)
       const data = normalize(action.payload.data, gifSchema);
 
       // Replace

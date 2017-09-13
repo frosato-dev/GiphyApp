@@ -31,13 +31,12 @@ class Home extends Component {
     this.props.search(values.query);
   };
 
-  loadMore = () => setTimeout(() => {
+  loadMore = () => {
     const { isLoading, query, list } = this.props;
     if(!isLoading) {
       this.props.search(query, list.length);
     }
-    return true;
-  }, 2500 ); // WTF setTimeout masonry lib sux
+  }
 
   toggleFavorite = (id) => () => {
     const favorite = this.props.favoritesById[id];
@@ -108,7 +107,7 @@ const mapStateToProps = state => ({
   list: state.search.list,
   count: state.search.list.length,
   total: state.search.pagination.total_count,
-  query: getUrlParam(window.location, 'q') || state.search.query,
+  query: state.search.query,
   isLoading: state.search.isLoading,
   favoritesById: state.favorites.listById,
 });

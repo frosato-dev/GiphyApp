@@ -14,11 +14,13 @@ const FORMAT = 'json';
 
 export const fetch = (dispatch) => (query, offset = 0, limit = 6) => {
 
+  /*
   dispatch(
     push({
       search: queryString.stringify({q: query}),
     })
   );
+  */
 
   return ({
     [CALL_API]: {
