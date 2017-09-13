@@ -42,3 +42,7 @@ body {
   opacity: .5;
   text-decoration: underline;
 }
+
+.results {
+  padding: 1rem;
+}

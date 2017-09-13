@@ -6,7 +6,6 @@ import Gif from '../components/Gif';
 import GifActions from './../components/Actions';
 import ActionCopy from './../components/Actions/copy';
 import ActionFavorite from './../components/Actions/favorite';
-import Loading from './../components/Loading';
 import { remove as removeFavorite } from './../actions/favorite';
 
 class Favorites extends Component {
@@ -20,21 +19,21 @@ class Favorites extends Component {
     const {
       list ,
       listById,
-      isLoading
     } = this.props;
 
     return (
       <div>
         <section className="results">
-          <Loading isLoading={isLoading} />
           <Grid
             isEmpty={!list.length}
             emptyMessage={"No gif added to your favorite yet"}
-            isLoading={isLoading}
+            isLoading={false}
+            loadMore={false}
+            hasMore={false}
           >
             {
               list.map(id => (
-                <Gif key={id} image={listById[id].images.downsized.url}>
+                <Gif key={id} image={listById[id].images.downsized}>
                   <GifActions>
                     <ActionFavorite
                       isFavorite={true}
@@ -59,7 +58,6 @@ const mapDispatchToProps = dispatch => bindActionCreators({
 const mapStateToProps = state => ({
   listById: state.favorites.listById,
   list: state.favorites.list,
-  isLoading: false,
 });
 
 export default connect(

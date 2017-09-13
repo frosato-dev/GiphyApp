@@ -1,4 +1,5 @@
 import React, { PureComponent } from 'react';
+import './SearchResultsText.css';
 
 export default class SearchResultsText extends PureComponent {
 
@@ -14,8 +15,13 @@ export default class SearchResultsText extends PureComponent {
     }
 
     return (
-      <div className="results__count">
-        Viewing <span>{count}</span> on <span>{total}</span> for search: <span>{search}</span>
+      <div className="search-result-text">
+        Viewing
+        <span className="search-result-text--accent"> {count} </span>
+        on
+        <span className="search-result-text--accent"> {total} </span>
+        for search:
+        <span className="search-result-text--accent"> {search} </span>
       </div>
     );
   }

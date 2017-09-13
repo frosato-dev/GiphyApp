@@ -1,31 +1,59 @@
 import React, { PureComponent } from 'react';
+import Masonry from 'react-masonry-infinite';
+import Loader from './Loader';
+import './Grid.css';
+
+const size = [
+  { columns: 1, gutter: 20 },
+  { mq: '768px', columns: 2, gutter: 20 },
+  { mq: '1024px', columns: 3, gutter: 20 }
+];
 
 export default class Grid extends PureComponent {
 
   renderEmpty = (emptyMessage) => (
-    <div className="results__empty">
+    <div className="grid__empty">
       {emptyMessage}
+    </div>
+  );
+
+  renderLoading = () => (
+    <div className="grid__loading">
+      <Loader />
     </div>
   );
 
   render() {
     const {
       children,
-      isLoading,
       isEmpty,
+      isLoading,
       emptyMessage,
+      loadMore,
+      hasMore,
+      loader,
     } = this.props;
 
-    if(isLoading)
-      return false;
+    console.log(isLoading, isEmpty);
+
+
+    if(isLoading && isEmpty)
+      return this.renderLoading();
 
     if(isEmpty)
       return this.renderEmpty(emptyMessage);
 
     return (
-      <div className="results__grid grid">
-        { children }
-      </div>
+      <Masonry
+        className="grid"
+        hasMore={hasMore}
+        loadMore={loadMore}
+        size={size}
+        loader={loader}
+        threshold={200}
+      >
+        {children}
+      </Masonry>
     );
   }
 }

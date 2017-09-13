@@ -15,7 +15,7 @@ import ActionCopy from './../components/Actions/copy';
 import ActionFavorite from './../components/Actions/favorite';
 import LoadMore from './../components/LoadMore';
 import SearchResultsText from './../components/SearchResultsText';
-import Loading from './../components/Loading';
+import Loader from '../components/Loader';
 
 export const getUrlParam = (url, key) => new URL(url).searchParams.get(key);
 
@@ -32,10 +32,13 @@ class Home extends Component {
     this.props.search(values.query);
   };
 
-  loadMore = () => {
-    const { query, list } = this.props;
-    this.props.search(query, list.length);
-  };
+  loadMore = () => setTimeout(() => {
+    const { isLoading, query, list } = this.props;
+    if(!isLoading) {
+      this.props.search(query, list.length);
+    }
+    return true;
+  }, 2500 ); // WTF setTimeout masonry lib sux
 
   toggleFavorite = (id) => () => {
     const favorite = this.props.favoritesById[id];
@@ -67,15 +70,17 @@ class Home extends Component {
             total={total}
             search={query}
           />
-          <Loading isLoading={isLoading} />
           <Grid
-            isEmpty={!list.length}
+            isEmpty={!list.length && query}
             emptyMessage={"No result"}
+            loadMore={this.loadMore}
+            hasMore={(!isLoading && count < total)}
+            loader={<Loader />}
             isLoading={isLoading}
           >
             {
-              list.map(id => (
-                <Gif key={id} image={listById[id].images.downsized.url}>
+              list.map((id, index) => (
+                <Gif key={`${id}_${index}`} image={listById[id].images.downsized}>
                   <GifActions>
                     <ActionFavorite
                       isFavorite={!!favoritesById[id]}
@@ -86,10 +91,6 @@ class Home extends Component {
                 </Gif>
               ))
             }
-            <LoadMore
-              canLoadMore={(!isLoading && count < total)}
-              action={this.loadMore}
-            />
           </Grid>
         </section>
       </div>
