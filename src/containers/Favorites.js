@@ -21,6 +21,7 @@ class Favorites extends Component {
       listById,
     } = this.props;
 
+    console.log(list, listById)
     return (
       <div>
         <section className="results">

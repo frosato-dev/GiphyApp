@@ -34,9 +34,6 @@ export default class Grid extends PureComponent {
       loader,
     } = this.props;
 
-    console.log(isLoading, isEmpty);
-
-
     if(isLoading && isEmpty)
       return this.renderLoading();
 
