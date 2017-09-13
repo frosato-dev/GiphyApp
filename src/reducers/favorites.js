@@ -32,7 +32,7 @@ export default (state = initialState, action) => {
       const _state = {
         ...state,
         listById,
-        list: state.list.filter(item => item !== item.id),
+        list: state.list.filter(id => id !== item.id),
       };
       console.log(_state)
       localStorage.setItem(STORAGE_KEY, JSON.stringify(_state));
