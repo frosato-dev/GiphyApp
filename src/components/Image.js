@@ -1,4 +1,4 @@
-import React, { PureComponent } from 'react';
+import React, { Component } from 'react';
 import Loader from './Loader';
 import './Image.css';
 
@@ -7,7 +7,7 @@ const STATUS = {
   LOADED: 'loaded',
   FAILED: 'failed',
 }
-export default class Image extends React.Component {
+export default class Image extends Component {
 
   constructor(props) {
     super(props);

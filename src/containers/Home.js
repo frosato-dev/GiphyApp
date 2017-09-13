@@ -13,7 +13,6 @@ import Gif from '../components/Gif';
 import GifActions from './../components/Actions';
 import ActionCopy from './../components/Actions/copy';
 import ActionFavorite from './../components/Actions/favorite';
-import LoadMore from './../components/LoadMore';
 import SearchResultsText from './../components/SearchResultsText';
 import Loader from '../components/Loader';
 
