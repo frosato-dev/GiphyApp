@@ -10,7 +10,6 @@ export const getUrlParam = (url, key) => new URL(url).searchParams.get(key);
 
 const initialState = {
   query: getUrlParam(window.location, 'q'),
-  results: '',
   pagination: {
     total_count: 0,
   },

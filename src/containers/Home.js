@@ -117,7 +117,7 @@ class Home extends Component {
 }
 
 const mapDispatchToProps = dispatch => bindActionCreators({
-  search: search(dispatch),
+  search,
   updateQuery,
   addFavorite,
   removeFavorite,
