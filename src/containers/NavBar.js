@@ -5,26 +5,36 @@ import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import { NavLink } from 'react-router-dom'
 
-class Home extends Component {
+import { HOME, FAVORITES } from "../constants/routes";
+
+class NavBar extends Component {
+
+  isCurrentLocation = (path) => () => {
+    const { pathname } = this.props;
+    return (pathname === path);
+  }
+
+  getHomePath() {
+    const { query } = this.props;
+    return query ? `${HOME}?q=${query}` : HOME;
+  }
 
   render() {
-    const { query } = this.props;
-
-    const searchPath = query ? `/?q=${query}` : '/';
 
     return (
       <nav className="header__nav">
         <NavLink
           exact
-          to={searchPath}
+          to={this.getHomePath()}
           className="header__nav-item"
           activeClassName="header__nav-item--active"
+          isActive={this.isCurrentLocation(HOME)}
         >
           Home
         </NavLink>
         <NavLink
           exact
-          to="/favorites"
+          to={FAVORITES}
           className="header__nav-item"
           activeClassName="header__nav-item--active"
         >
@@ -39,9 +49,10 @@ const mapDispatchToProps = dispatch => bindActionCreators({}, dispatch);
 
 const mapStateToProps = state => ({
   query: state.search.query,
+  pathname: state.routing.location.pathname,
 });
 
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(Home);
+)(NavBar);
