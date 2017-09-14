@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
-import Grid from '../components/Grid';
-import Gif from '../components/Gif';
+import Grid from './../components/Grid';
+import Gif from './../components/Gif';
 import GifActions from './../components/Actions';
 import ActionCopy from './../components/Actions/copy';
 import ActionFavorite from './../components/Actions/favorite';

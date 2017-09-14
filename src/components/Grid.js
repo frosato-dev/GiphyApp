@@ -3,14 +3,6 @@ import InfiniteScroll from 'react-infinite-scroller';
 import Loader from './Loader';
 import './Grid.css';
 
-/*
-const size = [
-  { columns: 1, gutter: 20 },
-  { mq: '768px', columns: 2, gutter: 20 },
-  { mq: '1024px', columns: 3, gutter: 20 }
-];
-*/
-
 export default class Grid extends PureComponent {
 
   renderEmpty = (emptyMessage) => (
@@ -44,7 +36,6 @@ export default class Grid extends PureComponent {
 
     return (
       <InfiniteScroll
-
         hasMore={hasMore}
         loadMore={loadMore}
         loader={loader}

@@ -8,14 +8,15 @@ import {
 } from './../actions/favorite';
 
 import SearchBar from './../components/Search';
-import Grid from '../components/Grid';
-import Gif from '../components/Gif';
+import Grid from './../components/Grid';
+import Gif from './../components/Gif';
 import GifActions from './../components/Actions';
 import ActionCopy from './../components/Actions/copy';
 import ActionFavorite from './../components/Actions/favorite';
 import SearchResultsText from './../components/SearchResultsText';
-import Loader from '../components/Loader';
-import AffixHOC from '../components/Affix';
+import Loader from './../components/Loader';
+import AffixHOC from './../components/Affix';
+import getSearchParam from './../utils/getSearchParam';
 
 let loadingMorePending;
 const AffixSearchResultText = AffixHOC(SearchResultsText);
@@ -118,14 +119,12 @@ const mapDispatchToProps = dispatch => bindActionCreators({
   removeFavorite,
 }, dispatch);
 
-export const getUrlParam = (url, key) => new URL(url).searchParams.get(key);
-
 const mapStateToProps = state => ({
   listById: state.search.listById,
   list: state.search.list,
   count: state.search.list.length,
   total: state.search.pagination.total_count,
-  query: getUrlParam(`http://test.com/${state.routing.location.search}`, 'q'), //state.search.query,
+  query: getSearchParam(state.routing.location.search, 'q'),
   isLoading: state.search.isLoading,
   favoritesById: state.favorites.listById,
 });
