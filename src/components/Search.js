@@ -6,7 +6,7 @@ import './Search.css';
 export const FORM_NAME = 'search';
 
 let SearchForm = props => {
-  const { handleSubmit, change, query, initialValues } = props
+  const { handleSubmit, change, query } = props
   return (
     <div className="search">
       <form className="search-form" onSubmit={ handleSubmit }>
