@@ -8,7 +8,7 @@ import {
   SEARCH_REQUEST_FAILURE,
 } from './../constants/actions';
 
-const BASE_URL = 'http://api.giphy.com';
+const BASE_URL = 'https://api.giphy.com';
 const API_KEY = '87ff4ebc68774374b2f22f18d5c9cdd5';
 const FORMAT = 'json';
 
