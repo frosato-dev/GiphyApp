@@ -2,8 +2,9 @@ import React, { Component } from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import Grid from './../components/Grid';
-import Gif from './../components/Gif';
-import GifActions from './../components/Actions';
+import GidItem from './../components/GidItem';
+import Image from './../components/Image';
+import Actions from './../components/Actions';
 import ActionCopy from './../components/Actions/copy';
 import ActionFavorite from './../components/Actions/favorite';
 import { remove as removeFavorite } from './../actions/favorite';
@@ -31,19 +32,22 @@ class Favorites extends Component {
             loadMore={() => {}}
             hasMore={false}
           >
-            {
-              list.map(id => (
-                <Gif key={id} image={listById[id].images.downsized}>
-                  <GifActions>
-                    <ActionFavorite
-                      isFavorite={true}
-                      action={this.removeFavorite(id)}
-                    />
-                    <ActionCopy text={listById[id].bitly_url}/>
-                  </GifActions>
-                </Gif>
-              ))
-            }
+            {list.map(id => (
+              <GidItem key={id}>
+                <Image
+                  src={listById[id].images.downsized.url}
+                  className="grid__panel-image"
+                  alt={'decorative'}
+                />
+                <Actions>
+                  <ActionFavorite
+                    isFavorite={true}
+                    action={this.removeFavorite(id)}
+                  />
+                  <ActionCopy text={listById[id].bitly_url}/>
+                </Actions>
+              </GidItem>
+            ))}
           </Grid>
         </section>
       </div>

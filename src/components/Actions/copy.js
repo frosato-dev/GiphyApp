@@ -7,6 +7,10 @@ export default class ActionCopy extends PureComponent {
     copied: false,
   };
 
+  shouldComponentUpdate(nextProps, nextState) {
+    return (nextState.copied !== this.state.copied);
+  }
+
   onCopy = () => {
     this.setState({copied: true}, () => {
       setTimeout(() => this.setState({copied: false}), 1000);

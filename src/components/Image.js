@@ -14,6 +14,13 @@ export default class Image extends Component {
     this.state = { imageStatus: STATUS.LOADING };
   }
 
+  shouldComponentUpdate(nextProps, nextState) {
+    return (
+      nextProps.url !== this.props.url ||
+      nextState.imageStatus !== this.state.imageStatus
+    );
+  }
+
   handleImageLoaded() {
     this.setState({ imageStatus: STATUS.LOADED });
   }

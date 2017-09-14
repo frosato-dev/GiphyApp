@@ -1,4 +1,5 @@
 import React, { PureComponent } from 'react'
+import './index.css';
 
 export default class Actions extends PureComponent {
 

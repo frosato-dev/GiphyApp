@@ -3,6 +3,13 @@ import './SearchResultsText.css';
 
 export default class SearchResultsText extends PureComponent {
 
+  shouldComponentUpdate(nextProps) {
+    return (
+      nextProps.count !== this.props.count ||
+      nextProps.search !== this.props.search
+    )
+  }
+
   render() {
     const {
       count,

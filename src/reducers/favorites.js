@@ -34,7 +34,6 @@ export default (state = initialState, action) => {
         listById,
         list: state.list.filter(id => id !== item.id),
       };
-      console.log(_state)
       localStorage.setItem(STORAGE_KEY, JSON.stringify(_state));
       return _state;
     }

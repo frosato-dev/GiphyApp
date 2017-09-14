@@ -1,7 +1,7 @@
 import React from 'react';
 import { AutoAffix } from 'react-overlays';
 
-export default (WrappedComponent, config) => {
+export default (WrappedComponent) => {
 
   return class extends React.Component {
 

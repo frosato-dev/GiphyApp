@@ -9,8 +9,9 @@ import {
 
 import SearchBar from './../components/Search';
 import Grid from './../components/Grid';
-import Gif from './../components/Gif';
-import GifActions from './../components/Actions';
+import GidItem from './../components/GidItem';
+import Image from './../components/Image';
+import Actions from './../components/Actions';
 import ActionCopy from './../components/Actions/copy';
 import ActionFavorite from './../components/Actions/favorite';
 import SearchResultsText from './../components/SearchResultsText';
@@ -92,19 +93,22 @@ class Home extends Component {
             loader={<Loader />}
             isLoading={isLoading}
           >
-            {
-              list.map((id, index) => (
-                <Gif key={`${id}_${index}`} image={listById[id].images.downsized}>
-                  <GifActions>
-                    <ActionFavorite
-                      isFavorite={!!favoritesById[id]}
-                      action={this.toggleFavorite(id)}
-                    />
-                    <ActionCopy text={listById[id].bitly_url}/>
-                  </GifActions>
-                </Gif>
-              ))
-            }
+            {list.map((id, index) => (
+              <GidItem key={`${id}_${index}`}>
+                <Image
+                  src={listById[id].images.downsized.url}
+                  className="grid__panel-image"
+                  alt={'decorative'}
+                />
+                <Actions>
+                  <ActionFavorite
+                    isFavorite={!!favoritesById[id]}
+                    action={this.toggleFavorite(id)}
+                  />
+                  <ActionCopy text={listById[id].bitly_url}/>
+                </Actions>
+              </GidItem>
+            ))}
           </Grid>
         </section>
       </div>

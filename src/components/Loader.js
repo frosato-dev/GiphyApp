@@ -3,6 +3,10 @@ import './Loader.css';
 
 export default class Loading extends PureComponent {
 
+  shouldComponentUpdate() {
+    return false;
+  }
+
   render() {
     return (
       <div className="loader-folding-cube">

@@ -1,5 +1,3 @@
-
-
 import React, { Component } from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
@@ -12,12 +10,12 @@ class NavBar extends Component {
   isCurrentLocation = (path) => () => {
     const { pathname } = this.props;
     return (pathname === path);
-  }
+  };
 
   getHomePath() {
     const { query } = this.props;
     return query ? `${HOME}?q=${query}` : HOME;
-  }
+  };
 
   render() {
 
