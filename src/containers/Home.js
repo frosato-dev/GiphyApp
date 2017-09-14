@@ -9,7 +9,7 @@ import {
 
 import SearchBar from './../components/Search';
 import Grid from './../components/Grid';
-import GidItem from './../components/GidItem';
+import GridItem from './../components/GridItem';
 import Image from './../components/Image';
 import Actions from './../components/Actions';
 import ActionCopy from './../components/Actions/copy';
@@ -94,7 +94,7 @@ class Home extends Component {
             isLoading={isLoading}
           >
             {list.map((id, index) => (
-              <GidItem key={`${id}_${index}`}>
+              <GridItem key={`${id}_${index}`}>
                 <Image
                   src={listById[id].images.downsized.url}
                   className="grid__panel-image"
@@ -107,7 +107,7 @@ class Home extends Component {
                   />
                   <ActionCopy text={listById[id].bitly_url}/>
                 </Actions>
-              </GidItem>
+              </GridItem>
             ))}
           </Grid>
         </section>

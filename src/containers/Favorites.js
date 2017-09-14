@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import Grid from './../components/Grid';
-import GidItem from './../components/GidItem';
+import GridItem from './../components/GridItem';
 import Image from './../components/Image';
 import Actions from './../components/Actions';
 import ActionCopy from './../components/Actions/copy';
@@ -33,7 +33,7 @@ class Favorites extends Component {
             hasMore={false}
           >
             {list.map(id => (
-              <GidItem key={id}>
+              <GridItem key={id}>
                 <Image
                   src={listById[id].images.downsized.url}
                   className="grid__panel-image"
@@ -46,7 +46,7 @@ class Favorites extends Component {
                   />
                   <ActionCopy text={listById[id].bitly_url}/>
                 </Actions>
-              </GidItem>
+              </GridItem>
             ))}
           </Grid>
         </section>

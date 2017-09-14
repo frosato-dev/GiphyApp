@@ -7,6 +7,7 @@ const STATUS = {
   LOADED: 'loaded',
   FAILED: 'failed',
 }
+
 export default class Image extends Component {
 
   constructor(props) {
