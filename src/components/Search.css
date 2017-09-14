@@ -6,8 +6,11 @@
 .search-form {
   max-width: 500px;
   min-width: 200px;
+  width: 100%;
   margin: 1rem auto;
   position: relative;
+  padding: 0 1rem;
+  box-sizing: border-box;
 }
 
 .search-form__input {
@@ -40,12 +43,12 @@
 
 .search-form__submit {
   mask: url('./../assets/img/glass.svg') no-repeat 50% 50%;
-  left: .75rem;
+  left: 1.75rem;
   top: .75rem;
 }
 
 .search-form__clear {
   mask: url('./../assets/img/cross.svg') no-repeat 50% 50%;
-  right: .75rem;
+  right: 1.75rem;
   top: .75rem;
 }

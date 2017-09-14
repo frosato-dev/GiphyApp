@@ -1,4 +1,3 @@
-
 .header {
   background-color: #571845; /* Purple */
   text-align: center;
@@ -11,7 +10,7 @@
   font-size: 3rem;
   font-weight: bold;
   margin: auto;
-  padding:  0.5rem 0;
+  padding: 1rem 0 0 0;
 }
 
 .header__logo {
@@ -35,4 +34,14 @@
 .header__nav-item--active {
   opacity: .5;
   text-decoration: underline;
+}
+
+@media (max-width: 380px) {
+  .header__title {
+    font-size: 2rem;
+    padding: 2rem 0 0 0;
+  }
+  .header__logo {
+    width: 100px;
+  }
 }
