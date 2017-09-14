@@ -21,7 +21,6 @@ class Favorites extends Component {
       listById,
     } = this.props;
 
-    console.log(list, listById)
     return (
       <div>
         <section className="results">
@@ -29,7 +28,7 @@ class Favorites extends Component {
             isEmpty={!list.length}
             emptyMessage={"No gif added to your favorite yet"}
             isLoading={false}
-            loadMore={false}
+            loadMore={() => {}}
             hasMore={false}
           >
             {

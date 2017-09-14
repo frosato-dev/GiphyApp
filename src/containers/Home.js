@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
-import { fetch as search } from './../actions/search';
+import { fetch as search, updateQuery } from './../actions/search';
 import {
   add as addFavorite,
   remove as removeFavorite,
@@ -23,15 +23,21 @@ const AffixSearchResultText = AffixHOC(SearchResultsText);
 class Home extends Component {
 
   componentWillMount() {
-    const { query } = this.props;
-    if(query && query.length) {
+    const { query, list } = this.props;
+    if(query && query.length && !list.length) {
       this.props.search(query);
     }
   };
 
   search = (values) => {
-    this.props.search(values.query);
+    this.props.updateQuery(values.query)
   };
+
+  componentWillReceiveProps(nextProps){
+    if(nextProps.query !== this.props.query) {
+      this.props.search(nextProps.query);
+    }
+  }
 
   loadMore = () => {
     const { isLoading, query, list } = this.props;
@@ -64,7 +70,6 @@ class Home extends Component {
       query,
       isLoading,
     } = this.props;
-
 
     return (
       <div>
@@ -108,16 +113,19 @@ class Home extends Component {
 
 const mapDispatchToProps = dispatch => bindActionCreators({
   search: search(dispatch),
+  updateQuery,
   addFavorite,
   removeFavorite,
 }, dispatch);
+
+export const getUrlParam = (url, key) => new URL(url).searchParams.get(key);
 
 const mapStateToProps = state => ({
   listById: state.search.listById,
   list: state.search.list,
   count: state.search.list.length,
   total: state.search.pagination.total_count,
-  query: state.search.query,
+  query: getUrlParam(`http://test.com/${state.routing.location.search}`, 'q'), //state.search.query,
   isLoading: state.search.isLoading,
   favoritesById: state.favorites.listById,
 });

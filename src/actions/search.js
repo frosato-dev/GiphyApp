@@ -1,6 +1,6 @@
 import { CALL_API } from 'redux-api-middleware';
 import queryString from 'query-string';
-import { replace } from 'react-router-redux';
+import { push } from 'react-router-redux';
 
 import {
   SEARCH_REQUEST,
@@ -12,15 +12,13 @@ const BASE_URL = 'http://api.giphy.com';
 const API_KEY = '87ff4ebc68774374b2f22f18d5c9cdd5';
 const FORMAT = 'json';
 
-export const fetch = (dispatch) => (query, offset = 0, limit = 20) => {
+export const updateQuery = (query) => {
+  return push({
+    search: queryString.stringify({q: query}),
+  })
+};
 
-  if(!offset) {
-    dispatch(
-      replace({
-        search: queryString.stringify({q: query}),
-      })
-    );
-  }
+export const fetch = (dispatch) => (query, offset = 0, limit = 20) => {
 
   return ({
     [CALL_API]: {
